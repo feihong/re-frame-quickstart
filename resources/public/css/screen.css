@@ -8,6 +8,10 @@ p.hanzi {
 	font-size: 4rem;
 }
 
+.hanzi-history {
+	font-size:  2rem;
+}
+
 .navbar {
   margin-bottom: 10px;
   border-radius: 0px;

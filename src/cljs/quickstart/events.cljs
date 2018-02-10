@@ -23,7 +23,10 @@
 (reg-event-db
   :generate-hanzi
   (fn [db _]
-    (assoc db :hanzi (util/random-hanzi))))
+    (let [old-hanzi (:hanzi db)
+          new-hanzi (util/random-hanzi)
+          new-history (conj (:hanzi-history db) old-hanzi)]
+      (assoc db :hanzi new-hanzi :hanzi-history new-history))))
 
 ;;subscriptions
 
@@ -41,3 +44,8 @@
   :hanzi
   (fn [db _]
     (:hanzi db)))
+
+(reg-sub
+  :hanzi-history
+  (fn [db _]
+    (:hanzi-history db)))

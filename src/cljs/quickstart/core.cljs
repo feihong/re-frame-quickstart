@@ -1,5 +1,6 @@
 (ns quickstart.core
-  (:require [reagent.core :as r]
+  (:require [clojure.string :as str]
+            [reagent.core :as r]
             [re-frame.core :as rf]
             [secretary.core :as secretary]
             [goog.events :as events]
@@ -40,7 +41,8 @@
    [:h1 "Random Hanzi"]
    [:button.btn.btn-primary {:on-click #(rf/dispatch [:generate-hanzi])}
                             "Generate"]
-   [:p.hanzi @(rf/subscribe [:hanzi])]])
+   [:p.hanzi @(rf/subscribe [:hanzi])]
+   [:p.hanzi-history (str/join " " @(rf/subscribe [:hanzi-history]))]])
 
 (def pages
   {:home #'home-page
@@ -83,7 +85,6 @@
 
 (defn init! []
   (rf/dispatch-sync [:initialize-db])
-  (rf/dispatch [:generate-hanzi])
   (load-interceptors!)
   (fetch-docs!)
   (hook-browser-navigation!)

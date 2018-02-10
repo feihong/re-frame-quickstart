@@ -8,5 +8,4 @@
                     (rand-int)
                     (+ start))
         hanzi (str (char ordinal))]
-    (println "Random hanzi" hanzi)
     hanzi))
