@@ -1,5 +1,6 @@
 (ns quickstart.events
   (:require [quickstart.db :as db]
+            [quickstart.util :as util]
             [re-frame.core :refer [dispatch reg-event-db reg-sub]]))
 
 ;;dispatchers
@@ -19,6 +20,11 @@
   (fn [db [_ docs]]
     (assoc db :docs docs)))
 
+(reg-event-db
+  :generate-hanzi
+  (fn [db _]
+    (assoc db :hanzi (util/random-hanzi))))
+
 ;;subscriptions
 
 (reg-sub
@@ -30,3 +36,8 @@
   :docs
   (fn [db _]
     (:docs db)))
+
+(reg-sub
+  :hanzi
+  (fn [db _]
+    (:hanzi db)))

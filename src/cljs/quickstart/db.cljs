@@ -1,4 +1,6 @@
 (ns quickstart.db)
 
 (def default-db
-  {:page :home})
+  {:page :home
+   :hanzi "?"
+   :hanzi-history []})

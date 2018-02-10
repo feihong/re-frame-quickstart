@@ -3,6 +3,11 @@ body {
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     height: 100%;
 }
+
+p.hanzi {
+	font-size: 4rem;
+}
+
 .navbar {
   margin-bottom: 10px;
   border-radius: 0px;
@@ -66,4 +71,3 @@ body {
         transform: rotate(360deg);
     }
 }
-

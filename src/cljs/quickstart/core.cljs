@@ -37,10 +37,10 @@
 
 (defn home-page []
   [:div.container
-   (when-let [docs @(rf/subscribe [:docs])]
-     [:div.row>div.col-sm-12
-      [:div {:dangerouslySetInnerHTML
-             {:__html (md->html docs)}}]])])
+   [:h1 "Random Hanzi"]
+   [:button.btn.btn-primary {:on-click #(rf/dispatch [:generate-hanzi])}
+                            "Generate"]
+   [:p.hanzi @(rf/subscribe [:hanzi])]])
 
 (def pages
   {:home #'home-page
@@ -83,6 +83,7 @@
 
 (defn init! []
   (rf/dispatch-sync [:initialize-db])
+  (rf/dispatch [:generate-hanzi])
   (load-interceptors!)
   (fetch-docs!)
   (hook-browser-navigation!)
