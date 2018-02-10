@@ -42,7 +42,10 @@
    [:button.btn.btn-primary {:on-click #(rf/dispatch [:generate-hanzi])}
                             "Generate"]
    [:p.hanzi @(rf/subscribe [:hanzi])]
-   [:p.hanzi-history (str/join " " @(rf/subscribe [:hanzi-history]))]])
+   [:div.hanzi-history
+    (for [hz @(rf/subscribe [:hanzi-history])]
+      [:span {:title hz} hz " "])]])
+
 
 (def pages
   {:home #'home-page
