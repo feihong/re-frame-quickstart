@@ -1,7 +1,8 @@
 (ns quickstart.events
   (:require [quickstart.db :as db]
             [quickstart.util :as util]
-            [re-frame.core :refer [dispatch reg-event-db reg-sub trim-v path]]))
+            [re-frame.core :refer [dispatch reg-event-db reg-sub subscribe
+                                   trim-v path]]))
 
 ;;dispatchers
 
@@ -40,11 +41,6 @@
     (:page db)))
 
 (reg-sub
-  :docs
-  (fn [db _]
-    (:docs db)))
-
-(reg-sub
   :hanzi
   (fn [db _]
     (:hanzi db)))
@@ -56,13 +52,17 @@
 
 (reg-sub
   :total-points
-  (fn [db _]
-    (-> db :hanzi-history count)))
+  (fn [_]
+    (subscribe [:hanzi-history]))
+  (fn [items _]
+    (count items)))
 
 (reg-sub
   :my-score
-  (fn [db _]
-    (->> db :hanzi-history (filter :correct) count)))
+  (fn [_]
+    (subscribe [:hanzi-history]))
+  (fn [items _]
+    (->> items (filter :correct) count)))
 
 (reg-sub
   :emoji-count
