@@ -1,7 +1,7 @@
 (ns quickstart.core
   (:require [clojure.string :as str]
             [reagent.core :as r]
-            [re-frame.core :as rf :refer [subscribe, dispatch, path, trim-v]]
+            [re-frame.core :as rf :refer [subscribe, dispatch]]
             [secretary.core :as secretary]
             [goog.events :as events]
             [goog.history.EventType :as HistoryEventType]
@@ -54,7 +54,7 @@
    [:p.hanzi-controls
     [:button.btn.btn-success {:on-click #(dispatch [:mark-as-correct])}
                              "Yes"]
-    [:button.btn.btn-danger {:on-click #(dispatch [:generate-hanzi])}
+    [:button.btn.btn-danger {:on-click #(dispatch [:mark-as-incorrect])}
                             "No"]
 
     [:span "Score: "
@@ -119,9 +119,6 @@
 
 ;; -------------------------
 ;; Initialize app
-(defn fetch-docs! []
-  (GET "/docs" {:handler #(dispatch [:set-docs %])}))
-
 (defn mount-components []
   (rf/clear-subscription-cache!)
   (r/render [#'page] (js/document.getElementById "app")))
@@ -129,6 +126,5 @@
 (defn init! []
   (rf/dispatch-sync [:initialize-db])
   (load-interceptors!)
-  (fetch-docs!)
   (hook-browser-navigation!)
   (mount-components))

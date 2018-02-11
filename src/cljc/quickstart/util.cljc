@@ -20,8 +20,8 @@
         result))))
 
 (defn generate-hanzi [db correct]
-  "Generate new hanzi and put the old in the history, marking it correct if
-  appropriate"
+  "Generate new hanzi and put the old hanzi in the history, marking it correct
+  if appropriate"
   (let [old-hanzi (-> (:hanzi db)
                       (assoc :correct correct))
         new-hanzi (new-hanzi-item)

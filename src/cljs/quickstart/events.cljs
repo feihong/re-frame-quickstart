@@ -1,7 +1,7 @@
 (ns quickstart.events
   (:require [quickstart.db :as db]
             [quickstart.util :as util]
-            [re-frame.core :refer [dispatch reg-event-db reg-sub]]))
+            [re-frame.core :refer [dispatch reg-event-db reg-sub trim-v path]]))
 
 ;;dispatchers
 
@@ -12,16 +12,12 @@
 
 (reg-event-db
   :set-active-page
-  (fn [db [_ page]]
+  [trim-v]
+  (fn [db [page]]
     (assoc db :page page)))
 
 (reg-event-db
-  :set-docs
-  (fn [db [_ docs]]
-    (assoc db :docs docs)))
-
-(reg-event-db
-  :generate-hanzi
+  :mark-as-incorrect
   (fn [db _]
     (util/generate-hanzi db false)))
 
@@ -32,7 +28,8 @@
 
 (reg-event-db
   :set-emoji-count
-  (fn [db [_ value]]
+  [trim-v]
+  (fn [db [value]]
     (assoc db :emoji-count (js/parseInt value))))
 
 ;;subscriptions
