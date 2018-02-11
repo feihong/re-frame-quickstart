@@ -1,8 +1,8 @@
 (ns quickstart.db
-  (:require [quickstart.util :refer [random-hanzi]]))
+  (:require [quickstart.util :as util]))
 
 
 (def default-db
   {:page :home
-   :hanzi (random-hanzi)
+   :hanzi (util/new-hanzi-item)
    :hanzi-history []})

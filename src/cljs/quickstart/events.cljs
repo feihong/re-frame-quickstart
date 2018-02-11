@@ -24,9 +24,10 @@
   :generate-hanzi
   (fn [db _]
     (let [old-hanzi (:hanzi db)
-          new-hanzi (util/random-hanzi)
+          new-hanzi (util/new-hanzi-item)
           new-history (conj (:hanzi-history db) old-hanzi)]
-      (assoc db :hanzi new-hanzi :hanzi-history new-history))))
+      (assoc db :hanzi new-hanzi
+                :hanzi-history new-history))))
 
 ;;subscriptions
 

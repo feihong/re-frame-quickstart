@@ -41,10 +41,10 @@
    [:h1 "Random Hanzi"]
    [:button.btn.btn-primary {:on-click #(rf/dispatch [:generate-hanzi])}
                             "Generate"]
-   [:p.hanzi @(rf/subscribe [:hanzi])]
+   [:p.hanzi (-> [:hanzi] rf/subscribe deref :val)]
    [:div.hanzi-history
-    (for [hz @(rf/subscribe [:hanzi-history])]
-      [:span {:title hz} hz " "])]])
+    (for [{:keys [id val]} @(rf/subscribe [:hanzi-history])]
+      ^{:key id} [:span {:title val} val " "])]])
 
 
 (def pages
