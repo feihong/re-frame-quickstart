@@ -25,6 +25,11 @@ p.hanzi {
 	margin-right: 1rem;
 }
 
+.emoji-controls > input {
+	width: 4rem;
+	margin-right: 1rem;
+}
+
 .navbar {
   margin-bottom: 10px;
   border-radius: 0px;

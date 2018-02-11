@@ -65,10 +65,22 @@
             attrs' (conj attrs (when correct [:className "correct"]))]
         ^{:key id} [:span attrs' val]))]])
 
+(defn emoji-page []
+  [:div.container
+   [:h1 "Random Emoji"]
+   [:div.emoji-controls
+    [:span "Number of emoji: "]
+    [:input {:type "number"
+             :value @(rf/subscribe [:emoji-count])
+             :on-change #(rf/dispatch [:set-emoji-count (-> % .-target .-value)])}]
+    [:button.btn.btn-primary {:on-click #(rf/dispatch [:generate-emojis])}
+                             "Generate"]]
+   [:div.emojis]])
 
 (def pages
   {:home #'home-page
    :hanzi #'hanzi-page
+   :emoji #'emoji-page
    :about #'about-page})
 
 (defn page []
@@ -85,6 +97,9 @@
 
 (secretary/defroute "/hanzi" []
   (rf/dispatch [:set-active-page :hanzi]))
+
+(secretary/defroute "/emoji" []
+  (rf/dispatch [:set-active-page :emoji]))
 
 (secretary/defroute "/about" []
   (rf/dispatch [:set-active-page :about]))

@@ -30,6 +30,11 @@
   (fn [db _]
     (util/generate-hanzi db true)))
 
+(reg-event-db
+  :set-emoji-count
+  (fn [db [_ value]]
+    (assoc db :emoji-count (js/parseInt value))))
+
 ;;subscriptions
 
 (reg-sub
@@ -61,3 +66,8 @@
   :my-score
   (fn [db _]
     (->> db :hanzi-history (filter :correct) count)))
+
+(reg-sub
+  :emoji-count
+  (fn [db _]
+    (:emoji-count db)))
