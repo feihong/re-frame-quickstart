@@ -27,7 +27,8 @@
    [:a.navbar-brand {:href "#/"} "quickstart"]
    [:div#collapsing-navbar.collapse.navbar-collapse
     [:ul.nav.navbar-nav.mr-auto
-     [nav-link "#/" "Home" :home]
+     [nav-link "#/hanzi" "Hanzi" :hanzi]
+     [nav-link "#/emoji" "Emoji" :emoji]
      [nav-link "#/about" "About" :about]]]])
 
 (defn about-page []
@@ -37,6 +38,15 @@
      [:img {:src (str js/context "/img/warning_clojure.png")}]]]])
 
 (defn home-page []
+  [:div.container
+   [:h1 "Home"]
+   [:ul
+    [:li
+     [:a {:href "#/hanzi"} "Random Hanzi"]]
+    [:li
+     [:a {:href "#/emoji"} "Random Emoji"]]]])
+
+(defn hanzi-page []
   [:div.container
    [:h1 "Random Hanzi"]
    [:div.button-box
@@ -58,6 +68,7 @@
 
 (def pages
   {:home #'home-page
+   :hanzi #'hanzi-page
    :about #'about-page})
 
 (defn page []
@@ -71,6 +82,9 @@
 
 (secretary/defroute "/" []
   (rf/dispatch [:set-active-page :home]))
+
+(secretary/defroute "/hanzi" []
+  (rf/dispatch [:set-active-page :hanzi]))
 
 (secretary/defroute "/about" []
   (rf/dispatch [:set-active-page :about]))
