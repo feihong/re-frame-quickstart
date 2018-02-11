@@ -41,16 +41,20 @@
    [:h1 "Random Hanzi"]
    [:div.button-box
     [:button.btn.btn-primary {:on-click #(rf/dispatch [:generate-hanzi])}
-                            "Generate"]
+                            "Next"]
     [:button.btn.btn-success {:on-click #(rf/dispatch [:mark-as-correct])}
-                             "I know this one!"]]
+                             "I know this one!"]
+    [:span "Score: "
+           [:span @(rf/subscribe [:my-score])]
+           " of "
+           [:span @(rf/subscribe [:total-points])]]]
    [:p.hanzi (-> [:hanzi] rf/subscribe deref :val)]
    [:div.hanzi-history
     (for [{:keys [id val correct]} @(rf/subscribe [:hanzi-history])]
       (let [attrs {:title val}
             attrs' (conj attrs (when correct [:className "correct"]))]
         ^{:key id} [:span attrs' val]))]])
-        
+
 
 (def pages
   {:home #'home-page

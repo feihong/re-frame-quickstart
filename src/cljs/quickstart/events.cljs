@@ -24,7 +24,7 @@
   :generate-hanzi
   (fn [db _]
     (util/generate-hanzi db false)))
-  
+
 (reg-event-db
   :mark-as-correct
   (fn [db _]
@@ -51,3 +51,13 @@
   :hanzi-history
   (fn [db _]
     (:hanzi-history db)))
+
+(reg-sub
+  :total-points
+  (fn [db _]
+    (-> db :hanzi-history count)))
+
+(reg-sub
+  :my-score
+  (fn [db _]
+    (->> db :hanzi-history (filter :correct) count)))

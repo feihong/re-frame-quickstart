@@ -18,9 +18,10 @@ p.hanzi {
 
 .hanzi-history span.correct {
 	background-color: palegoldenrod;
+	border: 1px dashed gray;
 }
 
-.button-box button {
+.button-box > * {
 	margin-right: 1rem;
 }
 
