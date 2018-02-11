@@ -78,8 +78,10 @@
     [:button.btn.btn-primary {:on-click #(dispatch [:generate-emojis])}
                              "Generate"]]
    [:p.emojis
-    (for [{:keys [id text shortname]} @(subscribe [:emojis])]
-      ^{:key id} [:span {:title shortname} text])]])
+    (for [{:keys [idx text shortname]} @(subscribe [:emojis])]
+      ^{:key idx} [:span {:title shortname
+                          :on-click #(dispatch [:replace-emoji idx])}
+                        text])]])
 
 (def pages
   {:home #'home-page

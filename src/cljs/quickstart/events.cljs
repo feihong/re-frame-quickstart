@@ -42,6 +42,13 @@
   (fn [{:keys [count] :as db} _]
     (assoc db :emojis (emoji/random-emojis count))))
 
+(reg-event-db
+  :replace-emoji
+  [(path :emoji :emojis)]
+  (fn [items [_ index]]
+    ; (println index)
+    (assoc items index (emoji/random-emoji))))
+
 ;;subscriptions
 
 (reg-sub
@@ -84,5 +91,5 @@
     (->> db
          :emoji
          :emojis
-         ; Add unique id to each map
-         (map-indexed #(assoc %2 :id (str "emoji-" %1))))))
+         ; Add indexes to each map
+         (map-indexed #(assoc %2 :idx %1)))))
