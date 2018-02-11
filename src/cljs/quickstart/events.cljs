@@ -81,4 +81,8 @@
 (reg-sub
   :emojis
   (fn [db _]
-    (-> db :emoji :emojis)))
+    (->> db
+         :emoji
+         :emojis
+         ; Add unique id to each map
+         (map-indexed #(assoc %2 :id (str "emoji-" %1))))))

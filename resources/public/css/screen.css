@@ -33,6 +33,7 @@ p.hanzi {
 .emojis > * {
 	font-size: 4rem;
 	margin-right: 1rem;
+	cursor: pointer;
 }
 
 .navbar {

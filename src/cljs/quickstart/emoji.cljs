@@ -19,6 +19,9 @@
 (defn random-emoji []
   (-> (rand-nth shortnames) get-emoji))
 
-(defn random-emojis [count]
-  (for [_ (range count)]
-    (random-emoji)))
+(defn random-emojis [num]
+  "Generate `num` unique emojis"
+  (loop [result #{}]
+    (if (>= (count result) num)
+      (into [] result)
+      (recur (conj result (random-emoji))))))
