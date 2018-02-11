@@ -21,7 +21,7 @@ p.hanzi {
 	border: 1px dashed gray;
 }
 
-.button-box > * {
+.hanzi-controls > * {
 	margin-right: 1rem;
 }
 

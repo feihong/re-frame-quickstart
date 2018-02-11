@@ -1,7 +1,7 @@
 (ns quickstart.core
   (:require [clojure.string :as str]
             [reagent.core :as r]
-            [re-frame.core :as rf]
+            [re-frame.core :as rf :refer [subscribe, dispatch, path, trim-v]]
             [secretary.core :as secretary]
             [goog.events :as events]
             [goog.history.EventType :as HistoryEventType]
@@ -13,7 +13,7 @@
 
 (defn nav-link [uri title page]
   [:li.nav-item
-   {:class (when (= page @(rf/subscribe [:page])) "active")}
+   {:class (when (= page @(subscribe [:page])) "active")}
    [:a.nav-link {:href uri} title]])
 
 (defn navbar []
@@ -24,7 +24,7 @@
      :data-toggle "collapse"
      :data-target "#collapsing-navbar"}
     [:span.navbar-toggler-icon]]
-   [:a.navbar-brand {:href "#/"} "quickstart"]
+   [:a.navbar-brand {:href "#/"} "Quickstart"]
    [:div#collapsing-navbar.collapse.navbar-collapse
     [:ul.nav.navbar-nav.mr-auto
      [nav-link "#/hanzi" "Hanzi" :hanzi]
@@ -42,28 +42,30 @@
    [:h1 "Home"]
    [:ul
     [:li
-     [:a {:href "#/hanzi"} "Random Hanzi"]]
+     [:a {:href "#/hanzi"} "Random Hanzi Quiz"]]
     [:li
-     [:a {:href "#/emoji"} "Random Emoji"]]]])
+     [:a {:href "#/emoji"} "Random Emoji Generator"]]]])
 
 (defn hanzi-page []
   [:div.container
-   [:h1 "Random Hanzi"]
-   [:div.button-box
-    [:button.btn.btn-primary {:on-click #(rf/dispatch [:generate-hanzi])}
-                            "Next"]
-    [:button.btn.btn-success {:on-click #(rf/dispatch [:mark-as-correct])}
-                             "I know this one!"]
+   [:h1 "Random Hanzi Quiz"]
+   [:h2  "Do you know this character?"]
+   [:p.hanzi (-> [:hanzi] subscribe deref :val)]
+   [:p.hanzi-controls
+    [:button.btn.btn-success {:on-click #(dispatch [:mark-as-correct])}
+                             "Yes"]
+    [:button.btn.btn-danger {:on-click #(dispatch [:generate-hanzi])}
+                            "No"]
+
     [:span "Score: "
-           [:span @(rf/subscribe [:my-score])]
+           [:span @(subscribe [:my-score])]
            " of "
-           [:span @(rf/subscribe [:total-points])]]]
-   [:p.hanzi (-> [:hanzi] rf/subscribe deref :val)]
+           [:span @(subscribe [:total-points])]]]
    [:div.hanzi-history
-    (for [{:keys [id val correct]} @(rf/subscribe [:hanzi-history])]
+    (for [{:keys [id val correct]} @(subscribe [:hanzi-history])]
       (let [attrs {:title val}
-            attrs' (conj attrs (when correct [:className "correct"]))]
-        ^{:key id} [:span attrs' val]))]])
+            span-attrs (conj attrs (when correct [:class "correct"]))]
+        ^{:key id} [:span span-attrs val]))]])
 
 (defn emoji-page []
   [:div.container
@@ -71,9 +73,9 @@
    [:div.emoji-controls
     [:span "Number of emoji: "]
     [:input {:type "number"
-             :value @(rf/subscribe [:emoji-count])
-             :on-change #(rf/dispatch [:set-emoji-count (-> % .-target .-value)])}]
-    [:button.btn.btn-primary {:on-click #(rf/dispatch [:generate-emojis])}
+             :value @(subscribe [:emoji-count])
+             :on-change #(dispatch [:set-emoji-count (-> % .-target .-value)])}]
+    [:button.btn.btn-primary {:on-click #(dispatch [:generate-emojis])}
                              "Generate"]]
    [:div.emojis]])
 
@@ -86,7 +88,7 @@
 (defn page []
   [:div
    [navbar]
-   [(pages @(rf/subscribe [:page]))]])
+   [(pages @(subscribe [:page]))]])
 
 ;; -------------------------
 ;; Routes
@@ -118,11 +120,11 @@
 ;; -------------------------
 ;; Initialize app
 (defn fetch-docs! []
-  (GET "/docs" {:handler #(rf/dispatch [:set-docs %])}))
+  (GET "/docs" {:handler #(dispatch [:set-docs %])}))
 
 (defn mount-components []
   (rf/clear-subscription-cache!)
-  (r/render [#'page] (.getElementById js/document "app")))
+  (r/render [#'page] (js/document.getElementById "app")))
 
 (defn init! []
   (rf/dispatch-sync [:initialize-db])
