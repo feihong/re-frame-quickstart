@@ -1,6 +1,7 @@
 (ns quickstart.events
   (:require [quickstart.db :as db]
             [quickstart.util :as util]
+            [quickstart.emoji :as emoji]
             [re-frame.core :refer [dispatch reg-event-db reg-sub subscribe
                                    trim-v path]]))
 
@@ -31,9 +32,15 @@
 
 (reg-event-db
   :set-emoji-count
-  [trim-v]
+  [(path :emoji) trim-v]
   (fn [db [value]]
-    (assoc db :emoji-count (js/parseInt value))))
+    (assoc db :count (js/parseInt value))))
+
+(reg-event-db
+  :generate-emojis
+  [(path :emoji)]
+  (fn [{:keys [count] :as db} _]
+    (assoc db :emojis (emoji/random-emojis count))))
 
 ;;subscriptions
 
@@ -69,4 +76,9 @@
 (reg-sub
   :emoji-count
   (fn [db _]
-    (:emoji-count db)))
+    (-> db :emoji :count)))
+
+(reg-sub
+  :emojis
+  (fn [db _]
+    (-> db :emoji :emojis)))

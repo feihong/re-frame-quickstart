@@ -6,5 +6,5 @@
   {:page :home
    :hanzi {:current (util/new-hanzi-item)
            :history []}
-   :emoji-count 20
-   :emojis []})
+   :emoji {:count 20
+           :emojis []}})

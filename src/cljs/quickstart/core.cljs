@@ -77,7 +77,9 @@
              :on-change #(dispatch [:set-emoji-count (-> % .-target .-value)])}]
     [:button.btn.btn-primary {:on-click #(dispatch [:generate-emojis])}
                              "Generate"]]
-   [:div.emojis]])
+   [:p.emojis
+    (for [{:keys [text shortname]} @(subscribe [:emojis])]
+      ^{:key shortname} [:span {:title shortname} text])]])
 
 (def pages
   {:home #'home-page
