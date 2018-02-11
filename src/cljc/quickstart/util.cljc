@@ -22,9 +22,9 @@
 (defn generate-hanzi [db correct]
   "Generate new hanzi and put the old hanzi in the history, marking it correct
   if appropriate"
-  (let [old-hanzi (-> (:hanzi db)
+  (let [old-hanzi (-> (:current db)
                       (assoc :correct correct))
         new-hanzi (new-hanzi-item)
-        new-history (conj (:hanzi-history db) old-hanzi)]
-    (assoc db :hanzi new-hanzi
-              :hanzi-history new-history)))
+        new-history (conj (:history db) old-hanzi)]
+    (assoc db :current new-hanzi
+              :history new-history)))

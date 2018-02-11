@@ -19,11 +19,13 @@
 
 (reg-event-db
   :mark-as-incorrect
+  [(path :hanzi)]
   (fn [db _]
     (util/generate-hanzi db false)))
 
 (reg-event-db
   :mark-as-correct
+  [(path :hanzi)]
   (fn [db _]
     (util/generate-hanzi db true)))
 
@@ -43,12 +45,12 @@
 (reg-sub
   :hanzi
   (fn [db _]
-    (:hanzi db)))
+    (-> db :hanzi :current)))
 
 (reg-sub
   :hanzi-history
   (fn [db _]
-    (:hanzi-history db)))
+    (-> db :hanzi :history)))
 
 (reg-sub
   :total-points

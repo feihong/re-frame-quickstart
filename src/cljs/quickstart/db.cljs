@@ -4,7 +4,7 @@
 
 (def default-db
   {:page :home
-   :hanzi (util/new-hanzi-item)
-   :hanzi-history []
+   :hanzi {:current (util/new-hanzi-item)
+           :history []}
    :emoji-count 20
    :emojis []})
