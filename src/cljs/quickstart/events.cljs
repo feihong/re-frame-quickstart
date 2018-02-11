@@ -23,11 +23,12 @@
 (reg-event-db
   :generate-hanzi
   (fn [db _]
-    (let [old-hanzi (:hanzi db)
-          new-hanzi (util/new-hanzi-item)
-          new-history (conj (:hanzi-history db) old-hanzi)]
-      (assoc db :hanzi new-hanzi
-                :hanzi-history new-history))))
+    (util/generate-hanzi db false)))
+  
+(reg-event-db
+  :mark-as-correct
+  (fn [db _]
+    (util/generate-hanzi db true)))
 
 ;;subscriptions
 

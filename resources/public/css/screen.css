@@ -12,6 +12,18 @@ p.hanzi {
 	font-size:  2rem;
 }
 
+.hanzi-history span {
+	margin-right: 1rem;
+}
+
+.hanzi-history span.correct {
+	background-color: palegoldenrod;
+}
+
+.button-box button {
+	margin-right: 1rem;
+}
+
 .navbar {
   margin-bottom: 10px;
   border-radius: 0px;

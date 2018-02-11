@@ -39,13 +39,18 @@
 (defn home-page []
   [:div.container
    [:h1 "Random Hanzi"]
-   [:button.btn.btn-primary {:on-click #(rf/dispatch [:generate-hanzi])}
+   [:div.button-box
+    [:button.btn.btn-primary {:on-click #(rf/dispatch [:generate-hanzi])}
                             "Generate"]
+    [:button.btn.btn-success {:on-click #(rf/dispatch [:mark-as-correct])}
+                             "I know this one!"]]
    [:p.hanzi (-> [:hanzi] rf/subscribe deref :val)]
    [:div.hanzi-history
-    (for [{:keys [id val]} @(rf/subscribe [:hanzi-history])]
-      ^{:key id} [:span {:title val} val " "])]])
-
+    (for [{:keys [id val correct]} @(rf/subscribe [:hanzi-history])]
+      (let [attrs {:title val}
+            attrs' (conj attrs (when correct [:className "correct"]))]
+        ^{:key id} [:span attrs' val]))]])
+        
 
 (def pages
   {:home #'home-page

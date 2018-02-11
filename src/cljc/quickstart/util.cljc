@@ -14,6 +14,17 @@
   (let [current-id (atom 0)]
     (fn []
       (let [result {:id @current-id
-                    :val (random-hanzi)}]
+                    :val (random-hanzi)
+                    :correct false}]
         (swap! current-id inc)
         result))))
+
+(defn generate-hanzi [db correct]
+  "Generate new hanzi and put the old in the history, marking it correct if
+  appropriate"
+  (let [old-hanzi (-> (:hanzi db)
+                      (assoc :correct correct))
+        new-hanzi (new-hanzi-item)
+        new-history (conj (:hanzi-history db) old-hanzi)]
+    (assoc db :hanzi new-hanzi
+              :hanzi-history new-history)))
