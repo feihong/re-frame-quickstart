@@ -37,17 +37,17 @@
 (reg-event-db
   :generate-emojis
   [(path :emoji)]
-  (fn [{:keys [count exclude-keywords] :as db} _]
-    (assoc db :emojis (emoji/random-emojis count exclude-keywords))))
+  (fn [{:keys [count include-keywords exclude-keywords] :as db} _]
+    (assoc db :emojis (emoji/random-emojis count
+                                           include-keywords
+                                           exclude-keywords))))
 
 (reg-event-db
   :replace-emoji
-  [(path :emoji)]
-  (fn [{:keys [emojis exclude-keywords] :as db} [_ index]]
-    (let [new-item (->> (repeatedly #(emoji/random-emoji-with-conditions exclude-keywords))
-                        (drop-while #(some #{%} emojis))
-                        first)]
-      (assoc-in db [:emojis index] new-item))))
+  [(path :emoji) trim-v]
+  (fn [{:keys [emojis include-keywords exclude-keywords] :as db} [index]]
+    (->> (emoji/random-emoji include-keywords exclude-keywords)
+         (assoc-in db [:emojis index]))))
 
 (reg-event-db
   :set-emoji-include

@@ -2,36 +2,38 @@
   (:require [clojure.string :as string]))
 
 
-(def shortnames (-> (.-shortnames js/emojione)
-                    (string/split "|")))
-
-(defn get-emoji [shortname]
-  (-> (js/emojione.shortnameToImage shortname)
-      ((fn [html]
-         (let [div (js/document.createElement "div")]
-           (set! (.-innerHTML div) html)
-           (.-firstChild div))))
-      ((fn [img]
-         {:text (.-alt img)
-          :shortname (.-title img)
-          :url (.-src img)}))))
+(def emojis (as-> (.-shortnames js/emojione) $
+                  (string/split $ "|")
+                  (map (fn [v] {:shortname v
+                                :text (js/emojione.shortnameToUnicode v)})
+                       $)
+                  (filter #(-> (:text %)
+                               (string/starts-with? ":")
+                               not)
+                          $)))
 
 (defn includes-keywords? [text keywords]
   "Return true if text includes one of the keywords"
   (some #(string/includes? text %) keywords))
 
-(defn random-emoji []
-  (-> (rand-nth shortnames)
-      (get-emoji)))
+(defn meets-criteria [shortname include-keywords exclude-keywords]
+  (and
+    (or
+      (empty? include-keywords)
+      (includes-keywords? shortname include-keywords))
+    (not (includes-keywords? shortname exclude-keywords))))
 
-(defn random-emoji-with-conditions [exclude-keywords]
-  (->> (repeatedly random-emoji)
-       (drop-while #(includes-keywords? (:shortname %) exclude-keywords))
-       first))
+(defn get-emojis [include-keywords exclude-keywords]
+  (->> emojis
+       (filter #(meets-criteria (:shortname %) include-keywords exclude-keywords))))
 
-(defn random-emojis [num exclude-keywords]
+(defn random-emoji [include-keywords exclude-keywords]
+  (-> (get-emojis include-keywords exclude-keywords)
+      (rand-nth)))
+
+(defn random-emojis [num include-keywords exclude-keywords]
   "Generate `num` unique emojis"
-  (loop [result #{}]
-    (if (>= (count result) num)
-      (into [] result)
-      (recur (conj result (random-emoji-with-conditions exclude-keywords))))))
+  (->> (get-emojis include-keywords exclude-keywords)
+       shuffle
+       (take num)
+       (into [])))
