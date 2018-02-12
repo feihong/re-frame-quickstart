@@ -8,7 +8,8 @@
             [markdown.core :refer [md->html]]
             [ajax.core :refer [GET POST]]
             [quickstart.ajax :refer [load-interceptors!]]
-            [quickstart.events])
+            [quickstart.events]
+            [quickstart.subs])
   (:import goog.History))
 
 (defn nav-link [uri title page]
