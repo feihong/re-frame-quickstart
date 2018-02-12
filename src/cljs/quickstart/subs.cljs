@@ -47,4 +47,4 @@
 (reg-sub
   :emoji-exclude
   (fn [db _]
-    (-> db :emoji :exclude)))
+    (-> db :emoji :exclude-keywords)))

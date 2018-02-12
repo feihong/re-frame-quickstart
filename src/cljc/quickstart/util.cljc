@@ -1,4 +1,6 @@
-(ns quickstart.util)
+(ns quickstart.util
+  (:require [clojure.string :as str]))
+
 
 (defn random-hanzi []
   (let [start 0x4e00
@@ -28,3 +30,7 @@
         new-history (conj (:history db) old-hanzi)]
     (assoc db :current new-hanzi
               :history new-history)))
+
+(defn get-keywords [text]
+  (-> (str/lower-case text)
+      (str/split #"\s+")))
