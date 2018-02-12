@@ -1,9 +1,9 @@
 (ns quickstart.emoji
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as string]))
 
 
 (def shortnames (-> (.-shortnames js/emojione)
-                    (str/split "|")))
+                    (string/split "|")))
 
 (defn get-emoji [shortname]
   (-> (js/emojione.shortnameToImage shortname)
@@ -18,7 +18,7 @@
 
 (defn includes-keywords? [text keywords]
   "Return true if text includes one of the keywords"
-  (some #(str/includes? text %) keywords))
+  (some #(string/includes? text %) keywords))
 
 (defn random-emoji []
   (-> (rand-nth shortnames)

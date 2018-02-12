@@ -1,5 +1,5 @@
 (ns quickstart.util
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as string]))
 
 
 (defn random-hanzi []
@@ -32,5 +32,5 @@
               :history new-history)))
 
 (defn get-keywords [text]
-  (-> (str/lower-case text)
-      (str/split #"\s+")))
+  (-> (string/lower-case text)
+      (string/split #"\s+")))

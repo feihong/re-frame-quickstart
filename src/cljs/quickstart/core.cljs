@@ -1,6 +1,5 @@
 (ns quickstart.core
-  (:require [clojure.string :as str]
-            [reagent.core :as r]
+  (:require [reagent.core :as r]
             [re-frame.core :as rf :refer [subscribe, dispatch]]
             [secretary.core :as secretary]
             [goog.events :as events]

@@ -50,3 +50,9 @@
                         (drop-while #(some #{%} emojis))
                         first)]
       (assoc-in db [:emojis index] new-item))))
+
+(reg-event-db
+  :set-emoji-exclude
+  [(path :emoji) trim-v]
+  (fn [db [value]]
+    (assoc db :exclude-keywords value)))
