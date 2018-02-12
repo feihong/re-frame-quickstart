@@ -46,8 +46,11 @@
   :replace-emoji
   [(path :emoji :emojis)]
   (fn [items [_ index]]
-    ; (println index)
-    (assoc items index (emoji/random-emoji))))
+    (let [new-item (loop [e (emoji/random-emoji)]
+                     (if (some #{e} items)
+                       (recur (emoji/random-emoji))
+                       e))]
+      (assoc items index new-item))))
 
 ;;subscriptions
 
