@@ -52,6 +52,12 @@
       (assoc-in db [:emojis index] new-item))))
 
 (reg-event-db
+  :set-emoji-include
+  [(path :emoji) trim-v]
+  (fn [db [value]]
+    (assoc db :include-keywords value)))
+
+(reg-event-db
   :set-emoji-exclude
   [(path :emoji) trim-v]
   (fn [db [value]]

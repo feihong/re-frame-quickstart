@@ -79,6 +79,12 @@
         :value @(subscribe [:emoji-count])
         :on-change #(dispatch [:set-emoji-count (-> % .-target .-value)])}]]]
     [:div.form-group.row
+     [:label.col-sm-2.col-form-label "Include:"]
+     [:div.col-sm-4
+      [:input.form-control
+       {:value @(subscribe [:emoji-include])
+        :on-change #(dispatch [:set-emoji-include (-> % .-target .-value)])}]]]
+    [:div.form-group.row
      [:label.col-sm-2.col-form-label "Exclude:"]
      [:div.col-sm-4
       [:input.form-control

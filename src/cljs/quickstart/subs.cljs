@@ -45,6 +45,11 @@
          (map-indexed #(assoc %2 :idx %1)))))
 
 (reg-sub
+  :emoji-include
+  (fn [db _]
+    (-> db :emoji :include-keywords)))
+
+(reg-sub
   :emoji-exclude
   (fn [db _]
     (-> db :emoji :exclude-keywords)))
