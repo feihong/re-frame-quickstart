@@ -32,5 +32,6 @@
               :history new-history)))
 
 (defn get-keywords [text]
-  (-> (string/lower-case text)
-      (string/split #"\s+")))
+  (as-> (string/lower-case text) $
+        (string/split $ #"\s+")
+        (remove string/blank? $)))
