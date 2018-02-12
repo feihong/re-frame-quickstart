@@ -96,3 +96,8 @@
          :emojis
          ; Add indexes to each map
          (map-indexed #(assoc %2 :idx %1)))))
+
+(reg-sub
+  :emoji-exclude
+  (fn [db _]
+    (-> db :emoji :exclude)))
