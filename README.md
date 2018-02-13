@@ -16,6 +16,16 @@ To start hot reloading server (figwheel), run:
 
     lein figwheel
 
+## Deployment
+
+Build a jar file:
+
+    lein uberjar
+
+Run the jar file:
+
+    java -jar target/uberjar/quickstart.jar
+
 ## References
 
 - [Running figwheel in a Cursive Clojure REPL](https://github.com/bhauman/lein-figwheel/wiki/Running-figwheel-in-a-Cursive-Clojure-REPL)
