@@ -147,7 +147,7 @@
   (rf/clear-subscription-cache!)
   (r/render [#'page] (js/document.getElementById "app")))
 
-(defn init! []
+(defn ^:export init []
   (rf/dispatch-sync [:initialize-db])
   (load-interceptors!)
   (hook-browser-navigation!)

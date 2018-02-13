@@ -5,5 +5,3 @@
 (enable-console-print!)
 
 (devtools/install!)
-
-(core/init!)
