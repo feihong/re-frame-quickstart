@@ -53,3 +53,8 @@
   :emoji-exclude
   (fn [db _]
     (-> db :emoji :exclude-text)))
+
+(reg-sub
+  :emoji/category
+  (fn [db _]
+    (-> db :emoji :category)))

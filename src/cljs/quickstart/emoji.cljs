@@ -11,6 +11,11 @@
                    :text (-> (aget item "uc_output") js/emojione.convert)
                    :category (aget item "category")}))))))
 
+(def categories
+  (->> emojis
+       (reduce #(conj %1 (:category %2)) #{})
+       (into [])))
+
 (defn includes-keywords? [text keywords]
   "Return true if text includes one of the keywords"
   (some #(string/includes? text %) keywords))

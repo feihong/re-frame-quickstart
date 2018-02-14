@@ -1,5 +1,7 @@
 (ns quickstart.views
-  (:require [re-frame.core :refer [dispatch subscribe]]))
+  (:require [clojure.string :as string]
+            [re-frame.core :refer [dispatch subscribe]]
+            [quickstart.emoji :as emoji]))
 
 
 (defn hanzi-page []
@@ -29,11 +31,20 @@
    [:form.emoji-controls
     [:div.form-group.row
      [:label.col-sm-2.col-form-label "Number of emoji:"]
-     [:div.col-sm-3
+     [:div.col-sm-2
       [:input.form-control
        {:type "number"
         :value @(subscribe [:emoji-count])
         :on-change #(dispatch [:set-emoji-count (-> % .-target .-value)])}]]]
+    [:div.form-group.row
+     [:label.col-sm-2.col-form-label "Category:"]
+     [:div.col-sm-2
+      [:select.form-control
+       {:value @(subscribe [:emoji/category])
+        :on-change #(dispatch [:emoji/set-category (-> % .-target .-value)])}
+       [:option {:value ""} "None"]  
+       (for [cat emoji/categories]
+         ^{:key cat} [:option {:value cat} (string/capitalize cat)])]]]
     [:div.form-group.row
      [:label.col-sm-2.col-form-label "Include:"]
      [:div.col-sm-4

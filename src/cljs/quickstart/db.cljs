@@ -7,6 +7,7 @@
    :hanzi {:current (util/new-hanzi-item)
            :history []}
    :emoji {:count 20
+           :category ""
            :include-text ""
            :include-keywords ""
            :exclude-text "flag"

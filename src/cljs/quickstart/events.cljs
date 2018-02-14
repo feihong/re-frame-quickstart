@@ -62,3 +62,9 @@
   (fn [db [value]]
     (assoc db :exclude-text value
               :exclude-keywords (util/get-keywords value))))
+
+(reg-event-db
+  :emoji/set-category
+  [(path :emoji) trim-v]
+  (fn [db [value]]
+    (assoc db :category value)))
