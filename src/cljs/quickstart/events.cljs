@@ -17,13 +17,13 @@
     (assoc db :page page)))
 
 (reg-event-db
-  :mark-as-incorrect
+  :hanzi/mark-incorrect
   [(path :hanzi)]
   (fn [db _]
     (util/generate-hanzi db false)))
 
 (reg-event-db
-  :mark-as-correct
+  :hanzi/mark-correct
   [(path :hanzi)]
   (fn [db _]
     (util/generate-hanzi db true)))

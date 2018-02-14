@@ -7,26 +7,26 @@
     (:page db)))
 
 (reg-sub
-  :hanzi
+  :hanzi/current
   (fn [db _]
     (-> db :hanzi :current)))
 
 (reg-sub
-  :hanzi-history
+  :hanzi/history
   (fn [db _]
     (-> db :hanzi :history)))
 
 (reg-sub
-  :total-points
+  :hanzi/total-points
   (fn [_]
-    (subscribe [:hanzi-history]))
+    (subscribe [:hanzi/history]))
   (fn [items _]
     (count items)))
 
 (reg-sub
-  :my-score
+  :hanzi/score
   (fn [_]
-    (subscribe [:hanzi-history]))
+    (subscribe [:hanzi/history]))
   (fn [items _]
     (->> items (filter :correct) count)))
 

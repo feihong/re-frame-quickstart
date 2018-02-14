@@ -8,19 +8,19 @@
   [:div.container
    [:h1 "Random Hanzi Quiz"]
    [:div "Do you know this character?"]
-   [:p.hanzi (-> [:hanzi] subscribe deref :val)]
+   [:p.hanzi (-> [:hanzi/current] subscribe deref :val)]
    [:p.hanzi-controls
-    [:button.btn.btn-success {:on-click #(dispatch [:mark-as-correct])}
+    [:button.btn.btn-success {:on-click #(dispatch [:hanzi/mark-correct])}
                              "Yes"]
-    [:button.btn.btn-danger {:on-click #(dispatch [:mark-as-incorrect])}
+    [:button.btn.btn-danger {:on-click #(dispatch [:hanzi/mark-incorrect])}
                             "No"]
 
     [:span "Score: "
-           [:span @(subscribe [:my-score])]
+           [:span @(subscribe [:hanzi/score])]
            " of "
-           [:span @(subscribe [:total-points])]]]
+           [:span @(subscribe [:hanzi/total-points])]]]
    [:div.hanzi-history
-    (for [{:keys [id val correct]} @(subscribe [:hanzi-history])]
+    (for [{:keys [id val correct]} @(subscribe [:hanzi/history])]
       (let [attrs {:title val}
             span-attrs (conj attrs (when correct [:class "correct"]))]
         ^{:key id} [:span span-attrs val]))]])
