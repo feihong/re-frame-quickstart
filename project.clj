@@ -59,15 +59,14 @@
               {:min
                {:source-paths ["src/cljc" "src/cljs" "env/prod/cljs"]
                 :compiler
-                {:main quickstart.core
-                 :output-dir "target/cljsbuild/public/js"
+                {:output-dir "target/cljsbuild/public/js"
                  :output-to "target/cljsbuild/public/js/app.js"
                  :source-map "target/cljsbuild/public/js/app.js.map"
                  :optimizations :advanced
                  :pretty-print false
                  :closure-warnings
                  {:externs-validation :off :non-standard-jsdoc :off}
-                 :externs ["react/externs/react.js"]}}}}
+                 :externs ["react/externs/react.js" "resources/emojione-externs.js"]}}}}
 
 
              :aot :all
