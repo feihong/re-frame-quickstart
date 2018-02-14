@@ -29,7 +29,7 @@
     (util/generate-hanzi db true)))
 
 (reg-event-db
-  :set-emoji-count
+  :emoji/set-count
   [(path :emoji) trim-v]
   (fn [db [value]]
     (assoc db :count (js/parseInt value))))
@@ -41,21 +41,21 @@
     (assoc db :emojis (emoji/random-emojis count db))))
 
 (reg-event-db
-  :replace-emoji
+  :emoji/replace-one
   [(path :emoji) trim-v]
   (fn [db [index]]
     (->> (emoji/random-emoji db)
          (assoc-in db [:emojis index]))))
 
 (reg-event-db
-  :set-emoji-include
+  :emoji/set-include
   [(path :emoji) trim-v]
   (fn [db [value]]
     (assoc db :include-text value
               :include-keywords (util/get-keywords value))))
 
 (reg-event-db
-  :set-emoji-exclude
+  :emoji/set-exclude
   [(path :emoji) trim-v]
   (fn [db [value]]
     (assoc db :exclude-text value

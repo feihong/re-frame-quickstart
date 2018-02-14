@@ -34,8 +34,8 @@
      [:div.col-sm-2
       [:input.form-control
        {:type "number"
-        :value @(subscribe [:emoji-count])
-        :on-change #(dispatch [:set-emoji-count (-> % .-target .-value)])}]]]
+        :value @(subscribe [:emoji/count])
+        :on-change #(dispatch [:emoji/set-count (-> % .-target .-value)])}]]]
     [:div.form-group.row
      [:label.col-sm-2.col-form-label "Category:"]
      [:div.col-sm-2
@@ -49,14 +49,14 @@
      [:label.col-sm-2.col-form-label "Include:"]
      [:div.col-sm-4
       [:input.form-control
-       {:value @(subscribe [:emoji-include])
-        :on-change #(dispatch [:set-emoji-include (-> % .-target .-value)])}]]]
+       {:value @(subscribe [:emoji/include])
+        :on-change #(dispatch [:emoji/set-include (-> % .-target .-value)])}]]]
     [:div.form-group.row
      [:label.col-sm-2.col-form-label "Exclude:"]
      [:div.col-sm-4
       [:input.form-control
-       {:value @(subscribe [:emoji-exclude])
-        :on-change #(dispatch [:set-emoji-exclude (-> % .-target .-value)])}]]]
+       {:value @(subscribe [:emoji/exclude])
+        :on-change #(dispatch [:emoji/set-exclude (-> % .-target .-value)])}]]]
 
     [:div.form-group.row
      [:div.col-sm-10
@@ -65,7 +65,7 @@
          :on-click #(dispatch [:emoji/generate])}
         "Generate"]]]]
    [:p.emojis
-    (for [{:keys [idx text shortname]} @(subscribe [:emojis])]
+    (for [{:keys [idx text shortname]} @(subscribe [:emoji/emojis])]
       ^{:key idx} [:span {:title shortname
-                          :on-click #(dispatch [:replace-emoji idx])}
+                          :on-click #(dispatch [:emoji/replace-one idx])}
                         text])]])

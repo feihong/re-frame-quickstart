@@ -31,12 +31,12 @@
     (->> items (filter :correct) count)))
 
 (reg-sub
-  :emoji-count
+  :emoji/count
   (fn [db _]
     (-> db :emoji :count)))
 
 (reg-sub
-  :emojis
+  :emoji/emojis
   (fn [db _]
     (->> db
          :emoji
@@ -45,12 +45,12 @@
          (map-indexed #(assoc %2 :idx %1)))))
 
 (reg-sub
-  :emoji-include
+  :emoji/include
   (fn [db _]
     (-> db :emoji :include-text)))
 
 (reg-sub
-  :emoji-exclude
+  :emoji/exclude
   (fn [db _]
     (-> db :emoji :exclude-text)))
 
