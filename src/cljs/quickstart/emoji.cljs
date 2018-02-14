@@ -20,24 +20,26 @@
   "Return true if text includes one of the keywords"
   (some #(string/includes? text %) keywords))
 
-(defn meets-criteria [{:keys [shortname]} include-keywords exclude-keywords]
+(defn meets-criteria [{:keys [shortname] :as emoji} {:keys [category include-keywords exclude-keywords]}]
   (and
+    (or (string/blank? category)
+        (= category (:category emoji)))
     (or
       (empty? include-keywords)
       (includes-keywords? shortname include-keywords))
     (not (includes-keywords? shortname exclude-keywords))))
 
-(defn get-emojis [include-keywords exclude-keywords]
+(defn get-emojis [options]
   (->> emojis
-       (filter #(meets-criteria % include-keywords exclude-keywords))))
+       (filter #(meets-criteria % options))))
 
-(defn random-emoji [include-keywords exclude-keywords]
-  (-> (get-emojis include-keywords exclude-keywords)
+(defn random-emoji [options]
+  (-> (get-emojis options)
       (rand-nth)))
 
-(defn random-emojis [num include-keywords exclude-keywords]
+(defn random-emojis [num options]
   "Generate `num` unique emojis"
-  (->> (get-emojis include-keywords exclude-keywords)
+  (->> (get-emojis options)
        shuffle
        (take num)
        (into [])))
