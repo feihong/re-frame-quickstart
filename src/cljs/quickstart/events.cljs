@@ -2,7 +2,7 @@
   (:require [quickstart.db :as db]
             [quickstart.util :as util]
             [quickstart.emoji :as emoji]
-            [re-frame.core :refer [dispatch reg-event-db trim-v path]]))
+            [re-frame.core :refer [dispatch reg-event-db reg-event-fx trim-v path]]))
 
 
 (reg-event-db
@@ -61,9 +61,9 @@
     (assoc db :exclude-text value
               :exclude-keywords (util/get-keywords value))))
 
-(reg-event-db
+(reg-event-fx
   :emoji/set-category
   [(path :emoji) trim-v]
-  (fn [db [value]]
-    (dispatch [:emoji/generate])
-    (assoc db :category value)))
+  (fn [{:keys [db]} [value]]
+    {:dispatch [:emoji/generate]
+     :db (assoc db :category value)}))
