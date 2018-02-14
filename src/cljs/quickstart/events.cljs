@@ -35,7 +35,7 @@
     (assoc db :count (js/parseInt value))))
 
 (reg-event-db
-  :generate-emojis
+  :emoji/generate
   [(path :emoji)]
   (fn [{:keys [count] :as db} _]
     (assoc db :emojis (emoji/random-emojis count db))))
@@ -65,4 +65,5 @@
   :emoji/set-category
   [(path :emoji) trim-v]
   (fn [db [value]]
+    (dispatch [:emoji/generate])
     (assoc db :category value)))

@@ -9,7 +9,7 @@
    :emoji {:count 20
            :category ""
            :include-text ""
-           :include-keywords ""
-           :exclude-text "flag"
-           :exclude-keywords ["flag"]
+           :include-keywords []
+           :exclude-text ""
+           :exclude-keywords []
            :emojis []}})

@@ -42,7 +42,7 @@
       [:select.form-control
        {:value @(subscribe [:emoji/category])
         :on-change #(dispatch [:emoji/set-category (-> % .-target .-value)])}
-       [:option {:value ""} "None"]  
+       [:option {:value ""} "All"]
        (for [cat emoji/categories]
          ^{:key cat} [:option {:value cat} (string/capitalize cat)])]]]
     [:div.form-group.row
@@ -62,7 +62,7 @@
      [:div.col-sm-10
       [:button.btn.btn-primary
         {:type "submit"
-         :on-click #(dispatch [:generate-emojis])}
+         :on-click #(dispatch [:emoji/generate])}
         "Generate"]]]]
    [:p.emojis
     (for [{:keys [idx text shortname]} @(subscribe [:emojis])]
