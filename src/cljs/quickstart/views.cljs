@@ -8,7 +8,7 @@
   [:div.container
    [:h1 "Random Hanzi Quiz"]
    [:div "Do you know this character?"]
-   [:p.hanzi (-> [:hanzi/current] subscribe deref :val)]
+   [:p.hanzi (-> [:hanzi/current] subscribe deref :word)]
    [:p.hanzi-controls
     [:button.btn.btn-success {:on-click #(dispatch [:hanzi/mark-correct])}
                              "Yes"]

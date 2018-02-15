@@ -99,6 +99,7 @@
 
 (defn ^:export init []
   (rf/dispatch-sync [:initialize-db])
+  (rf/dispatch [:hanzi/load-word])
   (load-interceptors!)
   (hook-browser-navigation!)
   (mount-components))

@@ -19,12 +19,6 @@
   (context "/api" []
     :tags ["quickstart"]
 
-    (GET "/plus" []
-      :return       Long
-      :query-params [x :- Long, {y :- Long 1}]
-      :summary      "x+y with query-parameters. y defaults to 1."
-      (ok (+ x y)))
-
     (GET "/random-word" []
       :return Word
       :query-params [{len :- Integer 1}]

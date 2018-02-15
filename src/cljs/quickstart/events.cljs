@@ -1,8 +1,10 @@
 (ns quickstart.events
-  (:require [quickstart.db :as db]
+  (:require [re-frame.core :refer [dispatch reg-event-db reg-event-fx trim-v path]]
+            day8.re-frame.http-fx
+            [ajax.core :as ajax]
+            [quickstart.db :as db]
             [quickstart.util :as util]
-            [quickstart.emoji :as emoji]
-            [re-frame.core :refer [dispatch reg-event-db reg-event-fx trim-v path]]))
+            [quickstart.emoji :as emoji]))
 
 
 (reg-event-db
@@ -15,6 +17,23 @@
   [trim-v]
   (fn [db [page]]
     (assoc db :page page)))
+
+(reg-event-fx
+  :hanzi/load-word
+  [(path :hanzi)]
+  (fn [db _]
+    {:http-xhrio {:method :get
+                  :uri (str js/context "/api/random-word")
+                  :timeout 3000
+                  :response-format (ajax/json-response-format {:keywords? true})
+                  :on-success [:hanzi/good-result]
+                  :on-failure [:hanzi/bad-result]}}))
+
+(reg-event-db
+  :hanzi/good-result
+  [(path :hanzi) trim-v]
+  (fn [db [result]]
+    (assoc db :current result)))
 
 (reg-event-db
   :hanzi/mark-incorrect
