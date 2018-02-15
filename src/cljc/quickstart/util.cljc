@@ -21,15 +21,12 @@
         (swap! current-id inc)
         result))))
 
-(defn generate-hanzi [db correct]
-  "Generate new hanzi and put the old hanzi in the history, marking it correct
-  if appropriate"
-  (let [old-hanzi (-> (:current db)
-                      (assoc :correct correct))
-        new-hanzi (new-hanzi-item)
-        new-history (conj (:history db) old-hanzi)]
-    (assoc db :current new-hanzi
-              :history new-history)))
+(defn move-current-to-history [db correct]
+  "tbd"
+  (let [old-word (-> (:current db)
+                     (assoc :correct correct))
+        new-history (conj (:history db) old-word)]
+    (assoc db :history new-history)))
 
 (defn get-keywords [text]
   (as-> (string/lower-case text) $

@@ -33,19 +33,15 @@
   :hanzi/good-result
   [(path :hanzi) trim-v]
   (fn [db [result]]
-    (assoc db :current result)))
+    (let [item (assoc result :correct false)]
+      (assoc db :current item))))
 
-(reg-event-db
-  :hanzi/mark-incorrect
-  [(path :hanzi)]
-  (fn [db _]
-    (util/generate-hanzi db false)))
-
-(reg-event-db
-  :hanzi/mark-correct
-  [(path :hanzi)]
-  (fn [db _]
-    (util/generate-hanzi db true)))
+(reg-event-fx
+  :hanzi/mark
+  [(path :hanzi) trim-v]
+  (fn [{:keys [db]} [correct]]
+    {:db (util/move-current-to-history db correct)
+     :dispatch [:hanzi/load-word]}))
 
 (reg-event-db
   :emoji/set-count

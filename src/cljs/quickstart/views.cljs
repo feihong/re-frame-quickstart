@@ -10,9 +10,9 @@
    [:div "Do you know this character?"]
    [:p.hanzi (-> [:hanzi/current] subscribe deref :word)]
    [:p.hanzi-controls
-    [:button.btn.btn-success {:on-click #(dispatch [:hanzi/mark-correct])}
+    [:button.btn.btn-success {:on-click #(dispatch [:hanzi/mark true])}
                              "Yes"]
-    [:button.btn.btn-danger {:on-click #(dispatch [:hanzi/mark-incorrect])}
+    [:button.btn.btn-danger {:on-click #(dispatch [:hanzi/mark false])}
                             "No"]
 
     [:span "Score: "
@@ -20,10 +20,10 @@
            " of "
            [:span @(subscribe [:hanzi/total-points])]]]
    [:div.hanzi-history
-    (for [{:keys [id val correct]} @(subscribe [:hanzi/history])]
-      (let [attrs {:title val}
+    (for [{:keys [word gloss pinyin correct]} @(subscribe [:hanzi/history])]
+      (let [attrs {:title (str pinyin " - " gloss)}
             span-attrs (conj attrs (when correct [:class "correct"]))]
-        ^{:key id} [:span span-attrs val]))]])
+        ^{:key word} [:span span-attrs word]))]])
 
 (defn emoji-page []
   [:div.container
