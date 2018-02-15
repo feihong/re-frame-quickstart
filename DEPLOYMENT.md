@@ -1,6 +1,17 @@
 # Deployment
 
+## Production config file
+
+prod-config.edn
+
+```
+{:port 39422
+ :app-context "/re-frame-quickstart"}
+```
+
 ## Launch script
+
+launch.sh
 
 ```
 #!/bin/sh
@@ -10,7 +21,7 @@ ps auxw | grep quickstart.jar | grep -v grep > /dev/null
 if [ $? != 0 ]
 then
     cd ~/webapps/re_frame_quickstart
-    java -jar quickstart.jar --port <PORT>
+    java -Dconf=prod-config.edn -jar quickstart.jar
 fi
 ```
 
