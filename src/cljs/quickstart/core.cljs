@@ -49,7 +49,9 @@
     [:li
      [:a {:href "#/hanzi"} "Random Hanzi Quiz"]]
     [:li
-     [:a {:href "#/emoji"} "Random Emoji Generator"]]]])
+     [:a {:href "#/emoji"} "Random Emoji Generator"]]
+    [:li
+     [:a {:href (str js/context "/swagger-ui")} "Swagger UI"]]]])
 
 (def pages
   {:home #'home-page
