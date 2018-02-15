@@ -27,7 +27,7 @@
 
 (defn emoji-page []
   [:div.container
-   [:h1 "Random Emoji"]
+   [:h1 "Random Emoji Generator"]
    [:form.emoji-controls
     [:div.form-group.row
      [:label.col-sm-2.col-form-label "Number of emoji:"]

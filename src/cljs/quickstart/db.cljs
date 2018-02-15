@@ -1,5 +1,6 @@
 (ns quickstart.db
-  (:require [quickstart.util :as util]))
+  (:require [quickstart.util :as util]
+            [quickstart.emoji :as emoji]))
 
 
 (def default-db
@@ -12,4 +13,4 @@
            :include-keywords []
            :exclude-text ""
            :exclude-keywords []
-           :emojis []}})
+           :emojis (emoji/random-emojis 20 {})}})

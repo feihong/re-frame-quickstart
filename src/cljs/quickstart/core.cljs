@@ -36,7 +36,11 @@
   [:div.container
    [:div.row
     [:div.col-md-12
-     [:img {:src (str js/context "/img/warning_clojure.png")}]]]])
+     [:img {:src (str js/context "/img/warning_clojure.png")}]
+     [:p "Using EmojiOne version " (.-emojiVersion js/emojione)]
+     (let [url "https://github.com/feihong/re-frame-quickstart"]
+       [:p "Source: "
+        [:a {:href url :target "_blank"} url]])]]])
 
 (defn home-page []
   [:div.container
