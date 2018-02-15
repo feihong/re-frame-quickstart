@@ -9,6 +9,7 @@
                  [cprop "0.1.11"]
                  [funcool/struct "1.2.0"]
                  [luminus-immutant "0.2.4"]
+                 [luminus-migrations "0.5.0"]
                  [luminus-nrepl "0.1.4"]
                  [luminus/ring-ttl-session "0.3.2"]
                  [markdown-clj "1.0.2"]
@@ -21,6 +22,7 @@
                  [org.clojure/tools.cli "0.3.5"]
                  [org.clojure/tools.logging "0.4.0"]
                  [org.clojure/tools.reader "1.2.1"]
+                 [org.postgresql/postgresql "42.2.1"]
                  [org.webjars.bower/tether "1.4.3"]
                  [org.webjars/bootstrap "4.0.0"]
                  [org.webjars/font-awesome "5.0.6"]
@@ -41,8 +43,10 @@
   :resource-paths ["resources" "target/cljsbuild"]
   :target-path "target/%s/"
   :main ^:skip-aot quickstart.core
+  :migratus {:store :database :db ~(get (System/getenv) "DATABASE_URL")}
 
-  :plugins [[lein-cljsbuild "1.1.5"]
+  :plugins [[migratus-lein "0.5.4"]
+            [lein-cljsbuild "1.1.5"]
             [lein-immutant "2.1.0"]]
   :clean-targets ^{:protect false}
   [:target-path [:cljsbuild :builds :app :compiler :output-dir] [:cljsbuild :builds :app :compiler :output-to]]
