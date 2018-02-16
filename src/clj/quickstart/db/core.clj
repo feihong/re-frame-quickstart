@@ -14,8 +14,15 @@
             BatchUpdateException
             PreparedStatement]))
 
+(def word-count (atom nil))
+
 (defstate ^:dynamic *db*
-  :start (conman/connect! {:jdbc-url (env :database-url)})
+  :start (let [db (conman/connect! {:jdbc-url (env :database-url)})]
+           (->> (jdbc/query db ["select count(*) from words"])
+                first
+                :count
+                (reset! word-count))
+           db)
   :stop (conman/disconnect! *db*))
 
 (conman/bind-connection *db* "sql/queries.sql")
@@ -54,3 +61,7 @@
   (sql-value [value] (to-pg-json value))
   IPersistentVector
   (sql-value [value] (to-pg-json value)))
+
+(defn random-word []
+  (-> (rand-int @word-count)
+      (#(get-word {:id %}))))

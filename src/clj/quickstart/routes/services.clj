@@ -2,10 +2,11 @@
   (:require [ring.util.http-response :refer :all]
             [compojure.api.sweet :refer :all]
             [schema.core :as s]
-            [quickstart.word :as word]))
+            [quickstart.db.core :as db]))
 
 (def Word
-  {:word String
+  {:id Integer
+   :word String
    :gloss String
    :pinyin String})
 
@@ -21,6 +22,6 @@
 
     (GET "/random-word" []
       :return Word
-      :query-params [{len :- Integer 1}]
-      :summary "Return a random word with the given length"
-      (ok (word/random-word)))))
+      ; :query-params [{len :- Integer 1}]
+      :summary "Return a random word"
+      (ok (db/random-word)))))
