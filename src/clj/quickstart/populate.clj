@@ -1,5 +1,7 @@
 (ns quickstart.populate
-  (:require [clojure.java.io :as io]
+  (:require [clojure.string :as string]
+            [clojure.java.io :as io]
+            [clojure.java.jdbc :as jdbc]
             [clj-http.client :as client]))
 
 
@@ -14,15 +16,28 @@
         (io/copy stream file)
         stream))))
 
-(defn get-items []
+(defn get-lines []
   (->> (get-stream)
        (java.util.zip.GZIPInputStream.)
        io/reader
        line-seq
-       (map #(re-matches #"^\p{L}+ (\p{L}+) \[(.*)\] /(.*)/$" %))
-       (map rest)))
+       (remove #(string/starts-with? % "#"))))
 
-; (jdbc/insert-multi! db/*db* :words [:id :word :pinyin :gloss]
-;   [
-;    [1 "hey" "hey" "hey"]
-;    [2 "boo" "boo" "boo"]])
+(defn get-items []
+  (->> (get-lines)
+       (map #(re-matches #"^.+ (.+) \[(.+)\] /(.+)/$" %))
+       (map rest)   ; throw away first group
+       (map-indexed (fn [idx itm] (conj itm idx))))) ; insert index at front
+
+(defn insert-words! [db]
+  (jdbc/delete! db :words)
+  (->> (get-items)
+       (partition 1000 1000 nil)  ; insert in batches of 1000
+       (map #(jdbc/insert-multi! db [:id :word :pinyin :gloss] %))))
+
+#_(doseq [line (p/get-lines)]
+    (if-not (re-matches #"^.+ (.+) \[(.+)\] /(.+)/$" line)
+      (prn line)))
+
+#_(doseq [item (p/get-items)]
+    (prn item))
