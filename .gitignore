@@ -15,3 +15,5 @@ profiles.clj
 .nrepl-port
 /log
 figwheel_server.log
+
+cedict.txt.gz

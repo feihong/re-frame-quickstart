@@ -5,7 +5,9 @@
 
   :dependencies [[clj-time "0.14.2"]
                  [cljs-ajax "0.7.3"]
+                 [clj-http "3.7.0"]
                  [compojure "1.6.0"]
+                 [conman "0.7.5"]
                  [cprop "0.1.11"]
                  [funcool/struct "1.2.0"]
                  [luminus-immutant "0.2.4"]
