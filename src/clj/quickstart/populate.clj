@@ -30,10 +30,10 @@
        (map-indexed (fn [idx itm] (conj itm idx))))) ; insert index at front
 
 (defn insert-words! [db]
-  (jdbc/delete! db :words)
+  (jdbc/delete! db :words [])
   (->> (get-items)
        (partition 1000 1000 nil)  ; insert in batches of 1000
-       (map #(jdbc/insert-multi! db [:id :word :pinyin :gloss] %))))
+       (map #(jdbc/insert-multi! db :words [:id :word :pinyin :gloss] %))))
 
 #_(doseq [line (p/get-lines)]
     (if-not (re-matches #"^.+ (.+) \[(.+)\] /(.+)/$" line)
