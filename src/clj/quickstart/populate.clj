@@ -33,11 +33,5 @@
   (jdbc/delete! db :words [])
   (->> (get-items)
        (partition 1000 1000 nil)  ; insert in batches of 1000
-       (map #(jdbc/insert-multi! db :words [:id :word :pinyin :gloss] %))))
-
-#_(doseq [line (p/get-lines)]
-    (if-not (re-matches #"^.+ (.+) \[(.+)\] /(.+)/$" line)
-      (prn line)))
-
-#_(doseq [item (p/get-items)]
-    (prn item))
+       (map #(jdbc/insert-multi! db :words [:id :word :pinyin :gloss] %))
+       (map #(println "Inserted " (count %) " items"))))
