@@ -31,6 +31,11 @@
     (->> items (filter :correct) count)))
 
 (reg-sub
+  :hanzi/show-meta
+  (fn [db _]
+    (-> db :hanzi :show-meta)))
+
+(reg-sub
   :emoji/count
   (fn [db _]
     (-> db :emoji :count)))

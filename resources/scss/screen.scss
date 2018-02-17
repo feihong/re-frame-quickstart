@@ -4,8 +4,27 @@ body {
     height: 100%;
 }
 
-p.hanzi {
-	font-size: 4rem;
+p.word {
+  display: flex;
+  align-items: center;
+
+  span.word {
+    font-size: 4rem;
+    cursor: pointer;
+  }
+
+  .meta {
+    visibility: hidden;
+    &.show {
+      visibility: visible;
+    }
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    .pinyin {
+      color: gray;
+    }
+  }
 }
 
 .hanzi-history {

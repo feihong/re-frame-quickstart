@@ -6,7 +6,8 @@
 (def default-db
   {:page :home
    :hanzi {:current nil
-           :history []}
+           :history []
+           :show-meta false}
    :emoji {:count 20
            :category ""
            :include-text ""

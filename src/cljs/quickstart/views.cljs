@@ -7,8 +7,14 @@
 (defn hanzi-page []
   [:div.container
    [:h1 "Random Hanzi Quiz"]
-   [:div "Do you know this character?"]
-   [:p.hanzi (-> [:hanzi/current] subscribe deref :word)]
+   [:div "Do you know this word?"]
+   (let [{:keys [word pinyin gloss]} @(subscribe [:hanzi/current])]
+     [:p.word
+      [:span.word {:on-click #(dispatch [:hanzi/show-meta true])}
+                  word]
+      [:div.meta (when @(subscribe [:hanzi/show-meta]) {:class "show"})
+       [:span.pinyin pinyin]
+       [:span.gloss gloss]]])
    [:p.hanzi-controls
     [:button.btn.btn-success {:on-click #(dispatch [:hanzi/mark true])}
                              "Yes"]

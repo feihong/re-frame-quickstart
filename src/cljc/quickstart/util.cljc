@@ -12,21 +12,13 @@
                     (+ start))]
     (str (char ordinal))))
 
-(defonce new-hanzi-item
-  (let [current-id (atom 0)]
-    (fn []
-      (let [result {:id @current-id
-                    :val (random-hanzi)
-                    :correct false}]
-        (swap! current-id inc)
-        result))))
-
 (defn move-current-to-history [db correct]
-  "tbd"
+  "Move the current word to history"
   (let [old-word (-> (:current db)
                      (assoc :correct correct))
         new-history (conj (:history db) old-word)]
-    (assoc db :history new-history)))
+    (assoc db :history new-history
+              :show-meta false)))
 
 (defn get-keywords [text]
   (as-> (string/lower-case text) $

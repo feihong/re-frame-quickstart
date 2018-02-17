@@ -36,6 +36,13 @@
     (let [item (assoc result :correct false)]
       (assoc db :current item))))
 
+(reg-event-db
+  :hanzi/show-meta
+  [(path :hanzi) trim-v]
+  (fn [db [value]]
+    (println value)
+    (assoc db :show-meta value)))
+
 (reg-event-fx
   :hanzi/mark
   [(path :hanzi) trim-v]
