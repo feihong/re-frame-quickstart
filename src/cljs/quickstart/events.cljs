@@ -40,7 +40,6 @@
   :hanzi/show-meta
   [(path :hanzi) trim-v]
   (fn [db [value]]
-    (println value)
     (assoc db :show-meta value)))
 
 (reg-event-fx

@@ -1,4 +1,4 @@
-(ns quickstart.populate
+(ns qs-tools.populate
   (:require [clojure.string :as string]
             [clojure.java.io :as io]
             [clojure.java.jdbc :as jdbc]

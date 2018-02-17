@@ -6,7 +6,8 @@
             [quickstart.config :refer [env]]
             [clojure.tools.cli :refer [parse-opts]]
             [clojure.tools.logging :as log]
-            [mount.core :as mount])
+            [mount.core :as mount]
+            [qs-tools.populate])
   (:gen-class))
 
 (def cli-options
@@ -57,11 +58,10 @@
       (mount/start #'quickstart.config/env)
       (migrations/migrate args (select-keys env [:database-url]))
       (System/exit 0))
-    ; (some #{"populate"} args)
-    ; (do
-    ;   (mount/start #'quickstart.config/env)
-    ;   (require '[quickstart.populate])
-    ;   (quickstart.populate/insert-words! (:database-url env))
-    ;   (System/exit 0))
+    (some #{"populate"} args)
+    (do
+      (mount/start #'quickstart.config/env)
+      (qs-tools.populate/insert-words! (:database-url env))
+      (System/exit 0))
     :else
     (start-app args)))
