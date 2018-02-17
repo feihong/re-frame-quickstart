@@ -16,6 +16,10 @@ To start hot reloading server (figwheel), run:
 
     lein figwheel
 
+To auto-compile scss files, run:
+
+    lein auto sassc one
+
 ## Deployment
 
 Build a jar file:

@@ -30,7 +30,7 @@
    [:h1 "Random Emoji Generator"]
    [:form.emoji-controls
     [:div.form-group.row
-     [:label.col-sm-2.col-form-label "Number of emoji:"]
+     [:label.col-sm-2.col-form-label "Number:"]
      [:div.col-sm-2
       [:input.form-control
        {:type "number"
@@ -38,7 +38,7 @@
         :on-change #(dispatch [:emoji/set-count (-> % .-target .-value)])}]]]
     [:div.form-group.row
      [:label.col-sm-2.col-form-label "Category:"]
-     [:div.col-sm-2
+     [:div.col-sm-3
       [:select.form-control
        {:value @(subscribe [:emoji/category])
         :on-change #(dispatch [:emoji/set-category (-> % .-target .-value)])}
