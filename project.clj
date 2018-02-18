@@ -61,7 +61,7 @@
 
   :auto
   {"sassc" {:file-pattern #"\.(scss|sass)$" :paths ["resources/scss"]}}
-  
+
   :hooks [leiningen.sassc]
   :clean-targets ^{:protect false}
   [:target-path [:cljsbuild :builds :app :compiler :output-dir] [:cljsbuild :builds :app :compiler :output-to]]
@@ -87,7 +87,9 @@
                  :pretty-print false
                  :closure-warnings
                  {:externs-validation :off :non-standard-jsdoc :off}
-                 :externs ["react/externs/react.js" "resources/emojione-externs.js"]}}}}
+                 :externs ["react/externs/react.js"
+                           "resources/emojione-externs.js"
+                           "resources/speech-externs.js"]}}}}
 
 
              :aot :all
