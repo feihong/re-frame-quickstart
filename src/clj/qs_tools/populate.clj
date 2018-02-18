@@ -23,10 +23,16 @@
        line-seq
        (remove #(string/starts-with? % "#"))))
 
+(defn parse-line [line]
+  ; We have to use . here instead of \p{L} because certain Chinese characters do
+  ; not match \p{L}
+  (let [result (re-matches #"^.+ (.+) \[(.+)\] /(.+)/$" line)]
+    (assert (not= result nil) (str "Line " line " does not have the expected format"))
+    (rest result)))     ; throw away first group
+
 (defn get-items []
   (->> (get-lines)
-       (map #(re-matches #"^.+ (.+) \[(.+)\] /(.+)/$" %))
-       (map rest)   ; throw away first group
+       (map parse-line)
        (map-indexed (fn [idx itm] (conj itm idx))))) ; insert index at front
 
 (defn insert-words! [db]
