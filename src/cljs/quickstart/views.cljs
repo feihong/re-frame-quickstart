@@ -31,38 +31,39 @@
             span-attrs (conj attrs (when correct [:class "correct"]))]
         ^{:key word} [:span span-attrs word]))]])
 
+(defn form-group [label child]
+  [:div.form-group.row
+   [:label.col-sm-2.col-form-label label]
+   child])
+
 (defn emoji-page []
   [:div.container
    [:h1 "Random Emoji Generator"]
    [:form.emoji-controls
-    [:div.form-group.row
-     [:label.col-sm-2.col-form-label "Number:"]
+    (form-group "Number:"
      [:div.col-sm-2
       [:input.form-control
        {:type "number"
         :value @(subscribe [:emoji/count])
-        :on-change #(dispatch [:emoji/set-count (-> % .-target .-value)])}]]]
-    [:div.form-group.row
-     [:label.col-sm-2.col-form-label "Category:"]
+        :on-change #(dispatch [:emoji/set-count (-> % .-target .-value)])}]])
+    (form-group "Category:"
      [:div.col-sm-3
       [:select.form-control
        {:value @(subscribe [:emoji/category])
         :on-change #(dispatch [:emoji/set-category (-> % .-target .-value)])}
        [:option {:value ""} "All"]
        (for [cat emoji/categories]
-         ^{:key cat} [:option {:value cat} (string/capitalize cat)])]]]
-    [:div.form-group.row
-     [:label.col-sm-2.col-form-label "Include:"]
+         ^{:key cat} [:option {:value cat} (string/capitalize cat)])]])
+    (form-group "Include:"
      [:div.col-sm-4
       [:input.form-control
        {:value @(subscribe [:emoji/include])
-        :on-change #(dispatch [:emoji/set-include (-> % .-target .-value)])}]]]
-    [:div.form-group.row
-     [:label.col-sm-2.col-form-label "Exclude:"]
+        :on-change #(dispatch [:emoji/set-include (-> % .-target .-value)])}]])
+    (form-group "Exclude:"
      [:div.col-sm-4
       [:input.form-control
        {:value @(subscribe [:emoji/exclude])
-        :on-change #(dispatch [:emoji/set-exclude (-> % .-target .-value)])}]]]
+        :on-change #(dispatch [:emoji/set-exclude (-> % .-target .-value)])}]])
 
     [:div.form-group.row
      [:div.col-sm-10
