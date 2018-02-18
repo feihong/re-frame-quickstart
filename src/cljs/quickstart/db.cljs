@@ -3,6 +3,15 @@
             [quickstart.emoji :as emoji]))
 
 
+(def default-voices
+  (let [voices (->> (.getVoices js/speechSynthesis)
+                    (map (fn [v] {:name (.-name v)
+                                  :lang (.-lang v)
+                                  :obj v})))]
+    {:voices voices
+     :current "Ting-Ting"
+     :phrase "Hello World 你好世界"}))
+
 (def default-db
   {:page :home
    :hanzi {:current nil
@@ -14,4 +23,5 @@
            :include-keywords []
            :exclude-text ""
            :exclude-keywords []
-           :emojis (emoji/random-emojis 20 {})}})
+           :emojis (emoji/random-emojis 20 {})}
+   :voices default-voices})

@@ -77,6 +77,28 @@
                           :on-click #(dispatch [:emoji/replace-one idx])}
                         text])]])
 
+(defn voice-option [{:keys [name lang]}]
+  ^{:key name}
+  [:option {:value name} (str name " (" lang ")")])
+
 (defn voices-page []
   [:div.container
-   [:h1 "Voices"]])
+   [:h1 "Voices"]
+   (form-group "Voices"
+     [:div.col-sm-3
+      [:select.form-control
+       {:value @(subscribe [:voices/current])
+        :on-change #(dispatch [:voices/set-voice (-> % .-target .-value)])}
+       (for [voice @(subscribe [:voices/voices])]
+        (voice-option voice))]])
+   (form-group "Phrase"
+     [:div.col-sm-8
+      [:input.form-control
+       {:value @(subscribe [:voices/phrase])
+        :on-change #(dispatch [:voices/set-phrase (-> % .-target .-value)])}]])
+   [:div.form-group.row
+    [:div.col-sm-10
+     [:button.btn.btn-primary
+       {:type "submit"
+        :on-click #(dispatch [:voices/speak])}
+       "Speak"]]]])

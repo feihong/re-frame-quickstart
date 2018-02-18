@@ -88,3 +88,28 @@
   (fn [{:keys [db]} [value]]
     {:dispatch [:emoji/generate]
      :db (assoc db :category value)}))
+
+(reg-event-db
+  :voices/speak
+  [(path :voices) trim-v]
+  (fn [{:keys [phrase current voices] :as db} _]
+    (let [utterance (js/SpeechSynthesisUtterance. phrase)
+          voice (-> (filter #(= current (% :name)) voices)
+                    first
+                    :obj)]
+      (prn voice)
+      (set! (.-voice utterance) voice)
+      (.speak js/speechSynthesis utterance))
+    db))
+
+(reg-event-db
+  :voices/set-phrase
+  [(path :voices) trim-v]
+  (fn [db [value]]
+    (assoc db :phrase value)))
+
+(reg-event-db
+  :voices/set-voice
+  [(path :voices) trim-v]
+  (fn [db [name]]
+    (assoc db :current name)))

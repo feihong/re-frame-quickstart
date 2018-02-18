@@ -63,3 +63,18 @@
   :emoji/category
   (fn [db _]
     (-> db :emoji :category)))
+
+(reg-sub
+  :voices/voices
+  (fn [db _]
+    (-> db :voices :voices)))
+
+(reg-sub
+  :voices/current
+  (fn [db _]
+    (-> db :voices :current)))
+
+(reg-sub
+  :voices/phrase
+  (fn [db _]
+    (-> db :voices :phrase)))
