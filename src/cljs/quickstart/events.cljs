@@ -93,11 +93,11 @@
   :voices/speak
   [(path :voices) trim-v]
   (fn [{:keys [phrase current voices] :as db} _]
+    ; Is there a way to turn this into a pure function?
     (let [utterance (js/SpeechSynthesisUtterance. phrase)
           voice (-> (filter #(= current (% :name)) voices)
                     first
                     :obj)]
-      (prn voice)
       (set! (.-voice utterance) voice)
       (.speak js/speechSynthesis utterance))
     db))
