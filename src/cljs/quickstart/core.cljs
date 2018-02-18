@@ -9,7 +9,7 @@
             [quickstart.ajax :refer [load-interceptors!]]
             [quickstart.events]
             [quickstart.subs]
-            [quickstart.views :refer [hanzi-page emoji-page]])
+            [quickstart.views :as views])
   (:import goog.History))
 
 (defn nav-link [uri title page]
@@ -30,6 +30,7 @@
     [:ul.nav.navbar-nav.mr-auto
      [nav-link "#/hanzi" "Hanzi" :hanzi]
      [nav-link "#/emoji" "Emoji" :emoji]
+     [nav-link "#/voices" "Voices" :emoji]
      [nav-link "#/about" "About" :about]]]])
 
 (defn about-page []
@@ -51,13 +52,16 @@
     [:li
      [:a {:href "#/emoji"} "Random Emoji Generator"]]
     [:li
+     [:a {:href "#/voices"} "Voices"]]
+    [:li
      [:a {:href (str js/context "/swagger-ui")} "Swagger UI"]]]])
 
 (def pages
   {:home #'home-page
    :about #'about-page
-   :hanzi #'hanzi-page
-   :emoji #'emoji-page})
+   :hanzi #'views/hanzi-page
+   :emoji #'views/emoji-page
+   :voices #'views/voices-page})
 
 (defn page []
   [:div
@@ -79,6 +83,9 @@
 
 (secretary/defroute "/about" []
   (rf/dispatch [:set-active-page :about]))
+
+(secretary/defroute "/voices" []
+  (rf/dispatch [:set-active-page :voices]))
 
 ;; -------------------------
 ;; History

@@ -76,3 +76,7 @@
       ^{:key idx} [:span {:title shortname
                           :on-click #(dispatch [:emoji/replace-one idx])}
                         text])]])
+
+(defn voices-page []
+  [:div.container
+   [:h1 "Voices"]])
