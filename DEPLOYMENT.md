@@ -6,7 +6,8 @@ prod-config.edn
 
 ```
 {:port 39422
- :app-context "/re-frame-quickstart"}
+ :app-context "/re-frame-quickstart"
+ :database-url "jdbc:postgresql://localhost/quickstart_prod?user=<user>&password=<password>"}
 ```
 
 ## Launch script
