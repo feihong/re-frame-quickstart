@@ -34,7 +34,14 @@
   [(path :hanzi) trim-v]
   (fn [db [result]]
     (let [item (assoc result :correct false)]
-      (assoc db :current item))))
+      (assoc db :current item
+                :error nil))))
+
+(reg-event-db
+  :hanzi/bad-result
+  [(path :hanzi) trim-v]
+  (fn [db [result]]
+    (assoc db :error result)))
 
 (reg-event-db
   :hanzi/show-meta

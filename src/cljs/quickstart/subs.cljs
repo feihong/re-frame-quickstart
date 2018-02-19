@@ -36,6 +36,11 @@
     (-> db :hanzi :show-meta)))
 
 (reg-sub
+  :hanzi/error
+  (fn [db _]
+    (-> db :hanzi :error)))
+
+(reg-sub
   :emoji/count
   (fn [db _]
     (-> db :emoji :count)))

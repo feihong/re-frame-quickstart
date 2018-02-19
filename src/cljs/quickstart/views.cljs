@@ -8,6 +8,8 @@
   [:div.container
    [:h1 "Random Hanzi Quiz"]
    [:div "Do you know this word?"]
+   (when-let [{:keys [status uri]} @(subscribe [:hanzi/error])]
+     [:div.error (str "Error with code " status " at " uri)])
    (let [{:keys [word pinyin gloss]} @(subscribe [:hanzi/current])]
      [:div.word
       [:span.word {:on-click #(dispatch [:hanzi/show-meta true])}

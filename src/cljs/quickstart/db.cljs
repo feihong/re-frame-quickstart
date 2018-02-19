@@ -12,7 +12,8 @@
   {:page :home
    :hanzi {:current nil
            :history []
-           :show-meta false}
+           :show-meta false
+           :error nil}
    :emoji {:count 20
            :category ""
            :include-text ""

@@ -4,6 +4,12 @@ body {
     height: 100%;
 }
 
+.error {
+	font-size: 1.5rem;
+	color: firebrick;
+	margin-bottom: 1rem;
+}
+
 div.word {
   display: flex;
   align-items: center;
