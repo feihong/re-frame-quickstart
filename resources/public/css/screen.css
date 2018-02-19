@@ -3,20 +3,20 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   height: 100%; }
 
-p.word {
+div.word {
   display: flex;
   align-items: center; }
-  p.word span.word {
+  div.word span.word {
     font-size: 4rem;
     cursor: pointer; }
-  p.word .meta {
+  div.word .meta {
     visibility: hidden;
     padding-left: 1rem;
     display: flex;
     flex-direction: column; }
-    p.word .meta.show {
+    div.word .meta.show {
       visibility: visible; }
-    p.word .meta .pinyin {
+    div.word .meta .pinyin {
       color: gray; }
 
 .hanzi-history {

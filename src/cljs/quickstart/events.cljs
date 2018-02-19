@@ -89,16 +89,46 @@
     {:dispatch [:emoji/generate]
      :db (assoc db :category value)}))
 
+; Source: http://clarkonium.net/2016/07/speech-synthesis-in-clojurescript/
+(reg-event-db
+  :voices/load-voices
+  [(path :voices)]
+  (fn [db _]
+    (.getVoices js/speechSynthesis)
+    ; Load voices on Firefox:
+    (.addEventListener js/window "DOMContentLoaded"
+                       #(dispatch [:voices/voices-loaded]))
+    ; Load voices on Chrome:
+    (set! (.-onvoiceschanged js/speechSynthesis)
+          #(dispatch [:voices/voices-loaded]))
+    db))
+
+(reg-event-db
+  :voices/voices-loaded
+  [(path :voices)]
+  (fn [db _]
+    (let [voices (->> (.getVoices js/speechSynthesis)
+                      (map (fn [v] {:name (.-name v)
+                                    :lang (.-lang v)
+                                    :obj v})))]
+      (assoc db :voices voices
+                :current
+                (cond
+                  (some #(= (:lang %) "zh-CN") voices)
+                  (->> voices (filter #(= (:lang %) "zh-CN")) first :name)
+                  :else
+                  (-> voices first :name))))))
+
 (reg-event-db
   :voices/speak
-  [(path :voices) trim-v]
+  [(path :voices)]
   (fn [{:keys [phrase current voices] :as db} _]
     ; Is there a way to turn this into a pure function?
     (let [utterance (js/SpeechSynthesisUtterance. phrase)
           voice (-> (filter #(= current (% :name)) voices)
                     first
                     :obj)]
-      (set! (.-voice utterance) voice)
+      (aset utterance "voice" voice)
       (.speak js/speechSynthesis utterance))
     db))
 

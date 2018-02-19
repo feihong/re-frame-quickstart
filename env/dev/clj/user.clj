@@ -1,6 +1,5 @@
 (ns user
-  (:require 
-            [mount.core :as mount]
+  (:require [mount.core :as mount]
             [quickstart.figwheel :refer [start-fw stop-fw cljs]]
             [quickstart.core :refer [start-app]]))
 
@@ -14,4 +13,6 @@
   (stop)
   (start))
 
-
+(defn start-all []
+  (start)
+  (start-fw))

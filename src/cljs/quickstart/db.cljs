@@ -4,13 +4,9 @@
 
 
 (def default-voices
-  (let [voices (->> (.getVoices js/speechSynthesis)
-                    (map (fn [v] {:name (.-name v)
-                                  :lang (.-lang v)
-                                  :obj v})))]
-    {:voices voices
-     :current "Ting-Ting"
-     :phrase "Hello World 你好世界"}))
+  {:voices []
+   :current ""
+   :phrase "Hello World 你好世界"})
 
 (def default-db
   {:page :home

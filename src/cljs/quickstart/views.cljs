@@ -9,7 +9,7 @@
    [:h1 "Random Hanzi Quiz"]
    [:div "Do you know this word?"]
    (let [{:keys [word pinyin gloss]} @(subscribe [:hanzi/current])]
-     [:p.word
+     [:div.word
       [:span.word {:on-click #(dispatch [:hanzi/show-meta true])}
                   word]
       [:div.meta (when @(subscribe [:hanzi/show-meta]) {:class "show"})

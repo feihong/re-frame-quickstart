@@ -107,6 +107,7 @@
 (defn ^:export init []
   (rf/dispatch-sync [:initialize-db])
   (rf/dispatch [:hanzi/load-word])
+  (rf/dispatch [:voices/load-voices])
   (load-interceptors!)
   (hook-browser-navigation!)
   (mount-components))
