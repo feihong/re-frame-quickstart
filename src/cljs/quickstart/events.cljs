@@ -124,11 +124,11 @@
   [(path :voices)]
   (fn [{:keys [phrase current voices] :as db} _]
     ; Is there a way to turn this into a pure function?
-    (let [utterance (js/SpeechSynthesisUtterance. phrase)
-          voice (-> (filter #(= current (% :name)) voices)
+    (let [voice (-> (filter #(= current (% :name)) voices)
                     first
-                    :obj)]
-      (aset utterance "voice" voice)
+                    :obj)
+          utterance (doto (js/SpeechSynthesisUtterance. phrase)
+                          (aset "voice" voice))]
       (.speak js/speechSynthesis utterance))
     db))
 
