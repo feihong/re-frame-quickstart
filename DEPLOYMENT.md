@@ -21,9 +21,11 @@ ps auxw | grep quickstart.jar | grep -v grep > /dev/null
 if [ $? != 0 ]
 then
     cd ~/webapps/re_frame_quickstart
-    java -Dconf=prod-config.edn -jar quickstart.jar
+    java -Xmx128m -Dconf=prod-config.edn -jar quickstart.jar
 fi
 ```
+
+Note the `-Xmx` option to set maximum heap size. To see how much memory your apps are using, run `ps -u <user> -o rss,etime,pid,command`.
 
 ## Crontab line
 
