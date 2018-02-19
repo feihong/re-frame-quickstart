@@ -1,5 +1,4 @@
 # Todo
 
-- Fix swagger ui on production
-- Add :voices/load-voices handler
-- Add :hanzi/bad-result handler
+- Fix top menu highlight for voices view
+- Fix swagger ui URL on production

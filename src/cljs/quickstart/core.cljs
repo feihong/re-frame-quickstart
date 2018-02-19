@@ -30,7 +30,7 @@
     [:ul.nav.navbar-nav.mr-auto
      [nav-link "#/hanzi" "Hanzi" :hanzi]
      [nav-link "#/emoji" "Emoji" :emoji]
-     [nav-link "#/voices" "Voices" :emoji]
+     [nav-link "#/voices" "Voices" :voices]
      [nav-link "#/about" "About" :about]]]])
 
 (defn about-page []

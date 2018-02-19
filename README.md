@@ -28,7 +28,7 @@ Build a jar file:
 
 Run the jar file:
 
-    java -jar target/uberjar/quickstart.jar
+    java -Dconf=dev-config.edn -jar target/uberjar/quickstart.jar
 
 ## References
 
