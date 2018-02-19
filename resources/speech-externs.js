@@ -7,4 +7,3 @@ var speechSynthesis = {
 
 /** @interface */
 function SpeechSynthesisUtterance(phrase) {}
-SpeechSynthesisUtterance.prototype.voice = {}

@@ -46,11 +46,13 @@
 
 (defn insert-words! [db]
   (println "Found" (word-count db) "rows in words table")
-  (jdbc/execute! db ["truncate table words"])
-  (println "Cleared words table")
 
-  ; Insert in batches of 1000
-  (doseq [batch (->> (get-items) (partition 1000 1000 nil))]
-    (insert-word-batch! db batch))
+  (jdbc/with-db-transaction [t-con db]
+    (jdbc/execute! t-con ["truncate table words"])
+    (println "Cleared words table")
+
+    ; Insert in batches of 1000
+    (doseq [batch (->> (get-items) (partition 1000 1000 nil))]
+      (insert-word-batch! t-con batch)))
 
   (println "\nNow there are" (word-count db) "rows in words table"))
