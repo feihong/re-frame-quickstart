@@ -58,7 +58,7 @@
       (mount/start #'quickstart.config/env)
       (migrations/migrate args (select-keys env [:database-url]))
       (System/exit 0))
-    (some #{"populate"} args)
+    (= args ["populate"])
     (do
       (mount/start #'quickstart.config/env)
       (qs-tools.populate/insert-words! (:database-url env))
