@@ -2,7 +2,9 @@
   (:require [ring.util.http-response :refer [ok]]
             [compojure.api.sweet :refer [context GET defapi]]
             [schema.core :as s]
-            [quickstart.db.core :as db]))
+            [quickstart.db.core :as db]
+            [quickstart.config :refer [env]]
+            [mount.core :as mount]))
 
 (def Word
   {:id Integer
@@ -10,10 +12,14 @@
    :gloss String
    :pinyin String})
 
+; Seems like this shouldn't go here
+(mount/start #'quickstart.config/env)
+
 (defapi service-routes
   {:swagger {:ui "/swagger-ui"
              :spec "/swagger.json"
-             :data {:info {:version "1.0.0"
+             :data {:basePath (:app-context env)
+                    :info {:version "1.0.0"
                            :title "Sample API"
                            :description "Sample Services"}}}}
 

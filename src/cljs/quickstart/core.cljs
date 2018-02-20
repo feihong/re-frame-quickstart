@@ -54,7 +54,7 @@
     [:li
      [:a {:href "#/voices"} "Voices"]]
     [:li
-     [:a {:href (str js/context "/swagger-ui")} "Swagger UI"]]]])
+     [:a {:href (str js/context "/swagger-ui/index.html")} "Swagger UI"]]]])
 
 (def pages
   {:home #'home-page
