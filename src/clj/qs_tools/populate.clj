@@ -10,12 +10,11 @@
 (defn get-stream []
   "Fetch the stream if the dict file already exists, otherwise download it"
   (let [file (io/file "cedict.txt.gz")]
-    (if (.exists file)
-      (io/input-stream file)
+    (when-not (.exists file)
       (let [stream (-> (client/get dict-url {:as :stream}) :body)]
         (println "Downloaded file from" dict-url)
-        (io/copy stream file)
-        stream))))
+        (io/copy stream file)))
+    (io/input-stream file)))
 
 (defn get-lines []
   (->> (get-stream)
