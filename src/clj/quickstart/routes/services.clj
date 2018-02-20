@@ -1,6 +1,6 @@
 (ns quickstart.routes.services
-  (:require [ring.util.http-response :refer :all]
-            [compojure.api.sweet :refer :all]
+  (:require [ring.util.http-response :refer [ok]]
+            [compojure.api.sweet :refer [context GET defapi]]
             [schema.core :as s]
             [quickstart.db.core :as db]))
 
@@ -18,7 +18,7 @@
                            :description "Sample Services"}}}}
 
   (context "/api" []
-    :tags ["quickstart"]
+    :tags ["api"]
 
     (GET "/random-word" []
       :return Word

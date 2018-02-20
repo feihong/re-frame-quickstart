@@ -23,7 +23,7 @@
   [(path :hanzi)]
   (fn [db _]
     {:http-xhrio {:method :get
-                  :uri (str js/context "/api/random-word")
+                  :uri "/api/random-word"
                   :timeout 3000
                   :response-format (ajax/json-response-format {:keywords? true})
                   :on-success [:hanzi/good-result]
