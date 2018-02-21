@@ -101,41 +101,43 @@
   :voices/load-voices
   [(path :voices)]
   (fn [db _]
-    (.getVoices js/speechSynthesis)
-    ; Load voices on Firefox:
-    (.addEventListener js/window "DOMContentLoaded"
-                       #(dispatch [:voices/voices-loaded]))
-    ; Load voices on Chrome:
-    (set! (.-onvoiceschanged js/speechSynthesis)
-          #(dispatch [:voices/voices-loaded]))
-    db))
+    (let [get-voices (fn [] (.getVoices js/speechSynthesis))]
+      (dispatch [:voices/voices-loaded (get-voices)])
+      ; Chrome won't load voices until onvoiceschanged fires
+      (set! (.-onvoiceschanged js/speechSynthesis)
+            #(dispatch [:voices/voices-loaded (get-voices)]))
+      db)))
 
 (reg-event-db
   :voices/voices-loaded
-  [(path :voices)]
-  (fn [db _]
-    (let [voices (->> (.getVoices js/speechSynthesis)
+  [(path :voices) trim-v]
+  (fn [db [voice-objects]]
+    (let [voices (->> voice-objects
                       (map (fn [v] {:name (.-name v)
                                     :lang (.-lang v)
                                     :obj v})))]
+      (println "Got" (count voice-objects) "voices")
       (assoc db :voices voices
                 :current
                 (cond
                   (some #(= (:lang %) "zh-CN") voices)
                   (->> voices (filter #(= (:lang %) "zh-CN")) first :name)
+                  (> (count voices) 0)
+                  (-> voices first :name)
                   :else
-                  (-> voices first :name))))))
+                  "")))))
 
 (reg-event-db
   :voices/speak
   [(path :voices)]
   (fn [{:keys [phrase current voices] :as db} _]
     ; Is there a way to turn this into a pure function?
-    (let [voice (-> (filter #(= current (% :name)) voices)
-                    first
-                    :obj)
-          utterance (doto (js/SpeechSynthesisUtterance. phrase)
-                          (aset "voice" voice))]
+    (let [voice-obj (-> (filter #(= current (% :name)) voices)
+                        first
+                        :obj)
+          utterance (doto (js/SpeechSynthesisUtterance.)
+                          (aset "text" phrase)
+                          (aset "voice" voice-obj))]
       (.speak js/speechSynthesis utterance))
     db))
 
