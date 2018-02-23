@@ -28,7 +28,7 @@
                  [org.webjars.bower/tether "1.4.3"]
                  [org.webjars/bootstrap "4.0.0"]
                  [org.webjars/font-awesome "5.0.6"]
-                 [re-frame "0.10.4"]
+                 [re-frame "0.10.5"]
                  [day8.re-frame/http-fx "0.1.5"]
                  [reagent "0.7.0"]
                  [reagent-utils "0.2.1"]

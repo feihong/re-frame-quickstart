@@ -47,12 +47,12 @@
       [:input.form-control
        {:type "number"
         :value @(subscribe [:emoji/count])
-        :on-change #(dispatch [:emoji/set-count (-> % .-target .-value)])}]])
+        :on-change #(dispatch [:emoji/set-count (.. % -target -value)])}]])
     (form-group "Category:"
      [:div.col-sm-3
       [:select.form-control
        {:value @(subscribe [:emoji/category])
-        :on-change #(dispatch [:emoji/set-category (-> % .-target .-value)])}
+        :on-change #(dispatch [:emoji/set-category (.. % -target -value)])}
        [:option {:value ""} "All"]
        (for [cat emoji/categories]
          ^{:key cat} [:option {:value cat} (string/capitalize cat)])]])
@@ -60,12 +60,12 @@
      [:div.col-sm-4
       [:input.form-control
        {:value @(subscribe [:emoji/include])
-        :on-change #(dispatch [:emoji/set-include (-> % .-target .-value)])}]])
+        :on-change #(dispatch [:emoji/set-include (.. % -target -value)])}]])
     (form-group "Exclude:"
      [:div.col-sm-4
       [:input.form-control
        {:value @(subscribe [:emoji/exclude])
-        :on-change #(dispatch [:emoji/set-exclude (-> % .-target .-value)])}]])
+        :on-change #(dispatch [:emoji/set-exclude (.. % -target -value)])}]])
 
     [:div.form-group.row
      [:div.col-sm-10
@@ -90,14 +90,14 @@
      [:div.col-sm-3
       [:select.form-control
        {:value @(subscribe [:voices/current])
-        :on-change #(dispatch [:voices/set-voice (-> % .-target .-value)])}
+        :on-change #(dispatch [:voices/set-voice (.. % -target -value)])}
        (for [voice @(subscribe [:voices/voices])]
         (voice-option voice))]])
    (form-group "Phrase"
      [:div.col-sm-8
       [:input.form-control
        {:value @(subscribe [:voices/phrase])
-        :on-change #(dispatch [:voices/set-phrase (-> % .-target .-value)])}]])
+        :on-change #(dispatch [:voices/set-phrase (.. % -target -value)])}]])
    [:div.form-group.row
     [:div.col-sm-10
      [:button.btn.btn-primary
