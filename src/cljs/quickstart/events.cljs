@@ -115,7 +115,8 @@
     (let [voices (->> voice-objects
                       (map (fn [v] {:name (.-name v)
                                     :lang (.-lang v)
-                                    :obj v})))]
+                                    :obj v}))
+                      (map-indexed (fn [i m] (assoc m :idx i))))]
       (println "Got" (count voice-objects) "voices")
       (assoc db :voices voices
                 :current

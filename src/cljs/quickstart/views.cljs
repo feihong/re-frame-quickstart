@@ -79,8 +79,8 @@
                           :on-click #(dispatch [:emoji/replace-one idx])}
                         text])]])
 
-(defn voice-option [{:keys [name lang]}]
-  ^{:key name}
+(defn voice-option [{:keys [idx name lang]}]
+  ^{:key idx}
   [:option {:value name} (str name " (" lang ")")])
 
 (defn voices-page []
@@ -103,4 +103,5 @@
      [:button.btn.btn-primary
        {:type "submit"
         :on-click #(dispatch [:voices/speak])}
+        ; :on-click #(.speak js/speechSynthesis (js/SpeechSynthesisUtterance. "what the hell"))}
        "Speak"]]]])
