@@ -85,6 +85,11 @@
     (-> db :voices :phrase)))
 
 (reg-sub
+  :fonts/text
+  (fn [db _]
+    (-> db :fonts :text)))
+
+(reg-sub
   :fonts/fonts
   (fn [db _]
-    (:fonts db)))
+    (-> db :fonts :fonts)))

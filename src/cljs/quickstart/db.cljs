@@ -22,4 +22,5 @@
            :exclude-keywords []
            :emojis (emoji/random-emojis 20 {})}
    :voices default-voices
-   :fonts ["a" "b" "c"]})
+   :fonts {:fonts []
+           :text "我们安排一个活动吧"}})

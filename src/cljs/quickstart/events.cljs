@@ -154,6 +154,12 @@
   (fn [db [name]]
     (assoc db :current name)))
 
+(reg-event-db
+  :fonts/set-text
+  [(path :fonts) trim-v]
+  (fn [db [text]]
+    (assoc db :text text)))
+
 (reg-event-fx
   :fonts/load
   (fn [_]
@@ -166,6 +172,6 @@
 
 (reg-event-db
   :fonts/good-result
-  [trim-v]
+  [(path :fonts) trim-v]
   (fn [db [result]]
     (assoc db :fonts result)))

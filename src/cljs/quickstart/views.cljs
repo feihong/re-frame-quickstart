@@ -82,9 +82,26 @@
 (defn fonts-page []
   [:div.container
    [:h1 "Fonts"]
-   [:button.btn.btn-primary {:on-click #(dispatch [:fonts/load])} "Load fonts"]
-   (for [font @(subscribe [:fonts/fonts])]
-     ^{:key font} [:li font])])
+   [:div
+    [:input {:class "form-control"
+             :placeholder "Sample text"
+             :value @(subscribe [:fonts/text])
+             :on-change #(dispatch [:fonts/set-text (.. % -target -value)])}]
+    [:button.btn.btn-primary {:on-click #(dispatch [:fonts/load])} "Load fonts"]]
+   [:table.table
+    [:thead
+     [:tr
+      [:th "Font"]
+      [:th "Sample"]]]
+    [:tbody
+     (let [text @(subscribe [:fonts/text])]
+       (for [font @(subscribe [:fonts/fonts])]
+         ^{:key font}
+         [:tr
+          [:td font]
+          [:td {:style {:font-family font
+                        :font-size "3rem"}}
+               text]]))]]])
 
 (defn voice-option [{:keys [idx name lang]}]
   ^{:key idx}
