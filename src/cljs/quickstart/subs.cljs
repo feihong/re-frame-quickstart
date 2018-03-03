@@ -83,3 +83,8 @@
   :voices/phrase
   (fn [db _]
     (-> db :voices :phrase)))
+
+(reg-sub
+  :fonts/fonts
+  (fn [db _]
+    (:fonts db)))

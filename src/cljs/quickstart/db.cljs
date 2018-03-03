@@ -21,4 +21,5 @@
            :exclude-text ""
            :exclude-keywords []
            :emojis (emoji/random-emojis 20 {})}
-   :voices default-voices})
+   :voices default-voices
+   :fonts ["a" "b" "c"]})

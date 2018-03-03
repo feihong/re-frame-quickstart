@@ -79,6 +79,13 @@
                           :on-click #(dispatch [:emoji/replace-one idx])}
                         text])]])
 
+(defn fonts-page []
+  [:div.container
+   [:h1 "Fonts"]
+   [:button.btn.btn-primary {:on-click #(dispatch [:fonts/load])} "Load fonts"]
+   (for [font @(subscribe [:fonts/fonts])]
+     ^{:key font} [:li font])])
+
 (defn voice-option [{:keys [idx name lang]}]
   ^{:key idx}
   [:option {:value name} (str name " (" lang ")")])

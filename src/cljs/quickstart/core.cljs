@@ -31,6 +31,7 @@
      [nav-link "#/hanzi" "Hanzi" :hanzi]
      [nav-link "#/emoji" "Emoji" :emoji]
      [nav-link "#/voices" "Voices" :voices]
+     [nav-link "#/fonts" "Fonts" :fonts]
      [nav-link "#/about" "About" :about]]]])
 
 (defn about-page []
@@ -54,6 +55,8 @@
     [:li
      [:a {:href "#/voices"} "Voices"]]
     [:li
+     [:a {:href "#/fonts"} "Fonts"]]
+    [:li
      [:a {:href (str js/context "/swagger-ui/index.html")} "Swagger UI"]]]])
 
 (def pages
@@ -61,7 +64,8 @@
    :about #'about-page
    :hanzi #'views/hanzi-page
    :emoji #'views/emoji-page
-   :voices #'views/voices-page})
+   :voices #'views/voices-page
+   :fonts #'views/fonts-page})
 
 (defn page []
   [:div
@@ -86,6 +90,9 @@
 
 (secretary/defroute "/voices" []
   (rf/dispatch [:set-active-page :voices]))
+
+(secretary/defroute "/fonts" []
+  (rf/dispatch [:set-active-page :fonts]))
 
 ;; -------------------------
 ;; History

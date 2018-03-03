@@ -21,7 +21,7 @@
 (reg-event-fx
   :hanzi/load-word
   [(path :hanzi)]
-  (fn [db _]
+  (fn [_]
     {:http-xhrio {:method :get
                   :uri "/api/random-word"
                   :timeout 3000
@@ -153,3 +153,19 @@
   [(path :voices) trim-v]
   (fn [db [name]]
     (assoc db :current name)))
+
+(reg-event-fx
+  :fonts/load
+  (fn [_]
+    {:http-xhrio {:method :get
+                  :uri "/api/fonts"
+                  :timeout 3000
+                  :response-format (ajax/json-response-format)
+                  :on-success [:fonts/good-result]
+                  :on-failure [:fonts/bad-result]}}))
+
+(reg-event-db
+  :fonts/good-result
+  [trim-v]
+  (fn [db [result]]
+    (assoc db :fonts result)))
