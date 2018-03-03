@@ -1,10 +1,12 @@
 (ns quickstart.routes.services
-  (:require [ring.util.http-response :refer [ok]]
+  (:require [mount.core :as mount]
+            [ring.util.http-response :refer [ok]]
             [compojure.api.sweet :refer [context GET api]]
             [schema.core :as s]
             [quickstart.db.core :as db]
             [quickstart.config :refer [env]]
-            [mount.core :as mount]))
+            [quickstart.fonts :as fonts]))
+
 
 (def Word
   {:id Integer
@@ -27,6 +29,10 @@
 
       (GET "/random-word" []
         :return Word
-        ; :query-params [{len :- Integer 1}]
         :summary "Return a random word"
-        (ok (db/random-word))))))
+        (ok (db/random-word)))
+
+      (GET "/fonts" []
+        :return [String]
+        :summary "Return names of Chinese fonts on system"
+        (ok (fonts/chinese-fonts))))))
